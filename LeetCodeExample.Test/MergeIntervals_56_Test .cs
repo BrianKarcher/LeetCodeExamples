@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LeetCodeExample.Test
 {
@@ -17,60 +18,48 @@ namespace LeetCodeExample.Test
         [Test]
         public void Test()
         {
-            int answer;
-            answer = NumDecodings("12");
-            Assert.AreEqual(2, answer);
-            answer = NumDecodings("226");
-            Assert.AreEqual(3, answer);
-            answer = NumDecodings("0");
-            Assert.AreEqual(0, answer);
-            answer = NumDecodings("06");
-            Assert.AreEqual(0, answer);
-            answer = NumDecodings("111111111111111111111111111111111111111111111");
+            int[][] answer;
+            answer = Merge(new int[][] { new int[] { 1, 3 }, new int[] { 2, 6 }, new int[] { 8, 10 }, new int[] { 15, 18 } });
+            Assert.AreEqual(new int[][] { new int[] { 1, 6 }, new int[] { 8, 10 }, new int[] { 15, 18 } }, answer);
 
+            answer = Merge(new int[][] { new int[] { 1, 4 }, new int[] { 4, 5 } });
+            Assert.AreEqual(new int[][] { new int[] { 1, 5 } }, answer);
         }
 
         private Dictionary<int, int> map;
 
-        public int NumDecodings(string s)
+        public int[][] Merge(int[][] intervals)
         {
-            if (string.IsNullOrEmpty(s))
-                return 0;
+            // Sort by first column
+            var sortedIntervals = intervals.OrderBy(i => i[0]);
 
-            map = new Dictionary<int, int>();
-            // This is what kick starts everything
-            // This also ensures that short-circuited paths return a zero since only paths that get to the end
-            // get this "1"
-            map.Add(s.Length, 1);
-            return Iterate(s, 0);
-        }
-        public int Iterate(string s, int index)
-        {
-            // If we have already calculated the perms up to this index, don't recalculate it
-            // This is Memoization
-            if (map.ContainsKey(index))
-                return map[index];
+            // The ending value will get expanded as we add more intervals that fall within the range
+            int currentMergeBlockStartingValue = sortedIntervals.First()[0];
+            int currentMergeBlockEndingValue = sortedIntervals.First()[1];
 
-            // Single-digit branch
-            int firstDigit = s[index];
-            // Regardless of anything else, a 0 at index needs to be short-circuted.
-            // 0 is invalid. 06 is invalid, etc.
-            if (firstDigit == '0')
+            List<int[]> mergedIntervals = new List<int[]>();
+
+            foreach (var interval in sortedIntervals)
             {
-                map.Add(index, 0);
-                return 0;
+                if (interval[0] <= currentMergeBlockEndingValue)
+                {
+                    // Ranges overlap, add the interval to the merge
+                    currentMergeBlockEndingValue = currentMergeBlockEndingValue < interval[1] ? interval[1] : currentMergeBlockEndingValue;
+                }
+                else
+                {
+                    // Gap found, add previous merged interval to the list
+                    mergedIntervals.Add(new int[] { currentMergeBlockStartingValue, currentMergeBlockEndingValue });
+                    // start a new merged interval with the current interval's range
+                    currentMergeBlockStartingValue = interval[0];
+                    currentMergeBlockEndingValue = interval[1];
+                }
             }
 
-            // Recursive call, this always gets called since we determined that there is a first value
-            int count = Iterate(s, index + 1);
+            // Add the last merged interval to the list (many people might miss this)
+            mergedIntervals.Add(new int[] { currentMergeBlockStartingValue, currentMergeBlockEndingValue });
 
-            // Double-digit branch
-            if (index < s.Length - 1 && Int32.Parse(s.Substring(index, 2)) < 27)
-            {
-                count += Iterate(s, index + 2);
-            }
-            map.Add(index, count);
-            return count;
+            return mergedIntervals.ToArray();
         }
     }
 }
