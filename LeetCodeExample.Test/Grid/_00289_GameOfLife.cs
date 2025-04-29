@@ -24,10 +24,10 @@ public class _00289_GameOfLife
             for (int j = 0; j < board[0].Length; j++)
             {
                 int nCount = 0;
-                foreach ((int r, int c) in dirs)
+                foreach (var dir in dirs)
                 {
-                    int newR = i + r;
-                    int newC = j + c;
+                     int newR = i + dir.r;
+                    int newC = j + dir.c;
                     if (newR < 0 || newC < 0 || newR >= board.Length || newC >= board[0].Length)
                     {
                         continue;
