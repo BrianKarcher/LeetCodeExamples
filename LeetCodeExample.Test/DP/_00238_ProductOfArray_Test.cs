@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace LeetCodeExample.Test
+namespace LeetCodeExample.Test.DP
 {
     public class ProductOfArray_238_Test
     {
@@ -15,7 +15,7 @@ namespace LeetCodeExample.Test
         public void Test()
         {
             int[] answer;
-            answer = ProductExceptSelf(new int[] { 1,2,3,4 });
+            answer = ProductExceptSelf(new int[] { 1, 2, 3, 4 });
             Assert.AreEqual(new int[] { 24, 12, 8, 6 }, answer);
         }
 
