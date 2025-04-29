@@ -26,9 +26,9 @@ namespace LeetCodeExample.Test
         {
             List<string> lst = new List<string>();
             //lst.OrderBy();
-            string[] log = new string[];
-            Array.Sort(log);
-            Char.IsDigit()
+            //string[] log = new string[5];
+            //Array.Sort(log);
+            //Char.IsDigit()
             int lo = 0;
             int hi = height.Length - 1;
             int maxArea = 0;

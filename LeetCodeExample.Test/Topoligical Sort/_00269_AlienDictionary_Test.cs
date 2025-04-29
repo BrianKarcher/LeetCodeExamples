@@ -42,7 +42,7 @@ namespace LeetCodeExample.Test
         }
 
         // maps the topological ordering (what letter goes after another) - sort of like a dependency list
-        Dictionary<char, List<char>> adjList = new Dictionary<char, List<char>>();
+        public Dictionary<char, List<char>> adjList = new Dictionary<char, List<char>>();
         // Doesn't exist = WHITE. Exists but false = GRAY, Exists but true = BLACK
         Dictionary<char, bool> seen = new Dictionary<char, bool>();
         //List<char> finalList = new List<char>();

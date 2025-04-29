@@ -18,7 +18,7 @@ namespace LeetCodeExample.Test
         [Test]
         public void Test()
         {
-            
+            var ans = Exist(new char[][] { new char[] { 'A', 'B', 'C', 'E' }, new char[] { 'S', 'F', 'C', 'S' }, new char[] { 'A', 'D', 'E', 'E' } }, "ABCCED");
         }
 
         int rowCount = 0;
@@ -37,13 +37,8 @@ namespace LeetCodeExample.Test
             {
                 for (int c = 0; c < colCount; c++)
                 {
-                    if (board[r][c] == word[0])
-                    {
-                        // Found a possible beginning letter, let's DFS it
-                        bool isFound = dfs(board, word, r, c, 0, visited);
-                        if (isFound)
-                            return true;
-                    }
+                    if (dfs(board, word, r, c, 0, visited))                    
+                        return true;                    
                 }
             }
             return false;
@@ -54,12 +49,17 @@ namespace LeetCodeExample.Test
 
         public bool dfs(char[][] board, string word, int row, int col, int index, bool[,] visited)
         {
-            if (index == word.Length - 1)
+            if (index >= word.Length)
                 return true;
 
-            visited[row, col] = true;
+            // Bounds check
+            if (row < 0 || row >= rowCount || col < 0 || col >= colCount || board[row][col] != word[index])
+                    return false;
 
-            char nextChar = word[index + 1];
+            if (visited[row, col])
+                return false;
+
+            visited[row, col] = true;
 
             // There are multiple paths we can go (or example if looking for 'A', and 'A'
             // is both to up and to the right, need to check both possibilities.
@@ -67,21 +67,13 @@ namespace LeetCodeExample.Test
             {
                 int newRow = row + dir.r;
                 int newCol = col + dir.c;
-                if (InBounds(newRow, newCol) && board[newRow][newCol] == nextChar && !visited[newRow, newCol])
-                {
-                    if (dfs(board, word, newRow, newCol, index + 1, visited))
-                        return true;
-                }
+                if (dfs(board, word, newRow, newCol, index + 1, visited))
+                    return true;
             }
 
             // This route was invalid, need to set visited back to false (backtrack).
             visited[row, col] = false;
             return false;
-        }
-
-        public bool InBounds(int row, int col)
-        {
-            return row >= 0 && row < rowCount && col >= 0 && col < colCount;
         }
     }
 }

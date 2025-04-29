@@ -28,7 +28,7 @@ namespace LeetCodeExample.Test
     //    Output: ""
     //Explanation: The order is invalid, so return "".
     /// </summary>
-    public class _00269_AlienDictionary_Test
+    public class G_00269_AlienDictionary_Test
     {
         [SetUp]
         public void Setup()
