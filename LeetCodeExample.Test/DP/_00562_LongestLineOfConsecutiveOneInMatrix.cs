@@ -19,6 +19,7 @@ namespace LeetCodeExample.Test
             int[,] vert = new int[m + 2, n + 2];
             int[,] horz = new int[m + 2, n + 2];
             int[,] diag = new int[m + 2, n + 2];
+            int[,] antidiag = new int[m + 2, n + 2];
 
             int max = 0;
             for (int r = 1; r <= m; r++)
@@ -33,18 +34,7 @@ namespace LeetCodeExample.Test
                         max = Math.Max(max, horz[r, c]);
                         diag[r, c] = diag[r - 1, c - 1] + 1;
                         max = Math.Max(max, diag[r, c]);
-                    }
-                }
-            }
-
-            int[,] antidiag = new int[m + 2, n + 2];
-            for (int r = m; r > 0; r--)
-            {
-                for (int c = 1; c <= n; c++)
-                {
-                    if (mat[r - 1][c - 1] == 1)
-                    {
-                        antidiag[r, c] = antidiag[r + 1, c - 1] + 1;
+                        antidiag[r, c] = antidiag[r - 1, c + 1] + 1;
                         max = Math.Max(max, antidiag[r, c]);
                     }
                 }
