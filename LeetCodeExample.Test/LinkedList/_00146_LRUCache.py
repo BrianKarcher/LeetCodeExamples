@@ -9,6 +9,82 @@
 
 # Note to self: Remmeber to correct both links when removing an item from a DOUBLE linked list.
 
+class Node:
+    def __init__(self, next = None, prev = None, key = 0, val = 0):
+        self.next: Node | None = next
+        self.prev: Node | None = prev
+        self.key = key
+        self.val = val
+
+    def print(self):
+        print(f'node prev={self.prev.key if self.prev else -1}, key={self.key}, val={self.val}, next={self.next.key if self.next else -1}')
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.cap = capacity
+        self.head = Node(key=-float('inf'))
+        self.tail = Node(key=float('inf'))
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.map: dict[int, Node] = {} # key: int, val: node
+
+    def __remove_from_ll__(self, node):
+        # print('removing')
+        # node.print()
+        # used when moving a node in get, as well as put when over capacity
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def __place_at_top__(self, node):
+        self.head.next.prev = node
+        node.prev = self.head
+        node.next = self.head.next
+        self.head.next = node
+
+    def get(self, key: int) -> int:
+        # print(f'get {key}')
+        # self.__print_ll()
+        if key not in self.map:
+            return -1
+        node = self.map[key]
+        # Move node to top
+        self.__remove_from_ll__(node)
+        self.__place_at_top__(node)
+        return node.val
+
+    def put(self, key: int, value: int) -> None:
+        # print(f'put {key}, {value}')
+        # print(f'before')
+        # self.__print_ll()
+        if key in self.map:
+            node = self.map[key]
+            node.val = value
+            # Move to top
+            self.__remove_from_ll__(node)
+            self.__place_at_top__(node)
+        else:
+            node = Node(key = key, val = value)
+            self.__place_at_top__(node)
+            self.map[key] = node
+            if len(self.map) > self.cap:
+                # Evict least recently used key
+                del_node = self.tail.prev
+                del self.map[del_node.key]
+                self.__remove_from_ll__(del_node)
+        # print(f'after')
+        # self.__print_ll()
+    
+    def __print_ll(self):
+        node = self.head
+        while node != None:
+            # print(f'{node.key} {node.val}')
+            node.print()
+            node = node.next
+
+
+############
+
 class Node: # A double linked list
     def __init__(self, key: int, val: int, prev = None, next = None):
         self.key = key
