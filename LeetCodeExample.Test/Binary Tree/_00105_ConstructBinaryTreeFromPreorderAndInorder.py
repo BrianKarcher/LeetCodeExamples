@@ -4,6 +4,28 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        inorderMap = {}
+        for i in range(len(inorder)):
+            inorderMap[inorder[i]] = i
+        def helper(l, r) -> Optional[TreeNode]:
+            if l > r:
+                return None
+            node = TreeNode(preorder.pop(0))
+            mid = inorderMap[node.val]
+            node.left = helper(l, mid - 1)
+            node.right = helper(mid + 1, r)
+            return node
+        return helper(0, len(inorder) - 1)
+
+
+
+####################
+
+
 class Solution:
     def __init__(self):
         self.used = set()
