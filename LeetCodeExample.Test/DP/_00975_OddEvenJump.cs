@@ -34,15 +34,15 @@ namespace LeetCodeExample.Test
 
             var sortedSet = new SortedSet<(int val, int index)>(Comparer<(int val, int index)>.Create((a, b) =>
             {
+                if (a.val == b.val)
+                    return 0;
                 if (a.val < b.val)
                     return -1;
                 return 1;
             }));
 
             int count = 0;
-            HashSet<int> hash = new();
 
-            // dp
             for (int i = arr.Length - 1; i >= 0; i--)
             {
                 if (i == arr.Length - 1)
@@ -54,21 +54,23 @@ namespace LeetCodeExample.Test
                 }
                 else
                 {
-                    // Perform the first jump
-                    // First jump is odd, so let's go to the smallest upper recorded value from here
-                    // We do not search by index, so leave index 0
+                    // Perform the odd jump from i
+                    // The jump is odd so let's go to the smallest upper recorded value from here
+                    // We sorted by value (see comparer above), not index, so index can be anything in GetViewBetween.
+                    // We'll use 0 for Index.
                     var upperSet = sortedSet.GetViewBetween((arr[i], 0), (Int32.MaxValue, 0));
+                    // DO NOT USE COUNT!!! Count is O(n). Any is O(1).
                     if (!upperSet.Any())
                         odd[i] = false;
                     else
                     {
-                        // We switch from odd to even, so put the next even's result into the odd dp
+                        // We switch from odd to even, so put the next even's result into the i'th odd dp
                         odd[i] = even[upperSet.Min.index];
-                        // This is the first jump since it is odd, if it is true then the path to the end exists
+                        // This is the first jump since it is odd, if it is true then the path to the end exists from i
                         if (odd[i])
                             count++;
                     }
-                    // Next do an Even jump (for future dp checks - helping them out)
+                    // Next do an Even jump from i (for future dp checks)
                     var lowerSet = sortedSet.GetViewBetween((Int32.MinValue, 0), (arr[i], 0));
                     if (!lowerSet.Any())
                         even[i] = false;
@@ -78,13 +80,11 @@ namespace LeetCodeExample.Test
                         even[i] = odd[lowerSet.Max.index];
                     }
                 }
-                // Need to remove and re-enter the value if it exists so it is properly sorted.
-                //if (sortedSet.Contains((arr[i], 0)))
-                //    sortedSet.Remove((arr[i], 0));
-                //if (hash.Contains(arr[i]))
-                //    continue;
+                // Need to remove and re-enter the value if it exists so it has the new index.
+                // Again, using 0 for Index since the Index has nothing to do with the sort
+                if (sortedSet.Contains((arr[i], 0)))
+                    sortedSet.Remove((arr[i], 0));
                 sortedSet.Add((arr[i], i));
-                //hash.Add(arr[i]);
             }
             return count;
         }
