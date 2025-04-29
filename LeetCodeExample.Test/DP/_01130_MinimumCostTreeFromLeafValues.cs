@@ -17,6 +17,32 @@ namespace LeetCodeExample.Test;
 /// </summary>
 public class _01130_MinimumCostTreeFromLeafValues
 {
+    public int mctFromLeafValues(int[] A)
+    {
+        int res = 0;
+        Stack<int> stack = new();
+        stack.Push(Int32.MaxValue);
+        foreach (int a in A)
+        {
+            while (stack.Peek() <= a)
+            {
+                int mid = stack.Pop();
+                res += mid * Math.Min(stack.Peek(), a);
+            }
+            stack.Push(a);
+        }
+        while (stack.Count() > 2)
+        {
+            res += stack.Pop() * stack.Peek();
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// ///////////////
+    /// </summary>
+    /// <param name="arr"></param>
+    /// <returns></returns>
     public int MctFromLeafValues(int[] arr)
     {
         // The leaves are in-order and this cannot be changed.
