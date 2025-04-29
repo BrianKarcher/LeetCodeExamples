@@ -23,8 +23,7 @@ class Solution:
             slopes = Counter()
             for j in range(i + 1, len(points)):
                 slopes[self.GetSlope(points[i], points[j])] += 1
-            for slope, count in slopes.items():
-                ans = max(ans, count + 1)
+            ans = max(ans, max(slopes.values()) + 1)
 
         # The reason for the +1 is because we counted the number of lines, not points.
         return ans
