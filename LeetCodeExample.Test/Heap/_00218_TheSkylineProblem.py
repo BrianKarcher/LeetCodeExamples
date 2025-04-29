@@ -13,6 +13,7 @@
 
 class Solution:
     def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
+        buildings = sorted(buildings, key=lambda x: (x[0], -x[2]))
         rtn = []
         currentHeight = 0
         # currentX = 0
@@ -37,15 +38,14 @@ class Solution:
 
             heapq.heappush(pq, (-building[2], building[0], building[1]))
 
-        # if new building increases the height, add the x coord
-        if building[2] > currentHeight:
-            currentHeight = building[2]
-            # currentX = building[0]
-            print(f'appending {building[0]}')
-            rtn.append([building[0], currentHeight])
-
+            # if new building increases the height, add the x coord
+            if building[2] > currentHeight:
+                currentHeight = building[2]
+                # currentX = building[0]
+                print(f'appending {building[0]}')
+                rtn.append([building[0], currentHeight])
         print('Flushing')
-        while len(pq) > 0 and pq[0][2] < building[0]:
+        while len(pq) > 0:
             tallest = heapq.heappop(pq)
             # remove occluded buildings (an example is the blue building in example 1)
             while len(pq) > 0 and pq[0][2] < tallest[2]:
@@ -59,6 +59,8 @@ class Solution:
                 currentHeight = 0
             # currentHeight = height
             # currentX = tallest[2]
+            if len(rtn) > 0 and rtn[-1][1] == currentHeight:
+                continue
             print(f'appending {tallest[2]}')
             rtn.append([tallest[2], currentHeight])
 
