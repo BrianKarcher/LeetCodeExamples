@@ -17,7 +17,7 @@ class Solution:
 
         # allUsed = False
         l = 0
-        ans = ""
+        ans = (0, 0)
         length = sys.maxsize
         for r in range(len(s)):
             # subtract r from dict if exists
@@ -35,7 +35,7 @@ class Solution:
                 # all letters have been used
                 while count == 0 and l <= r:
                     if r - l < length:
-                        ans = s[l:r+1]
+                        ans = (l, r)
                         length = len(ans)
                     # Pluck an L
                     if s[l] in chars:
@@ -43,4 +43,4 @@ class Solution:
                         if chars[s[l]] > 0:
                             count += 1
                     l += 1
-        return ans
+        return "" if length == sys.maxsize else s[ans[0]:ans[1]+1]
