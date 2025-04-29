@@ -43,28 +43,20 @@ namespace LeetCodeExample.Test
             char c1 = i1 >= s1.Length ? ' ' : s1[i1];
             char c2 = i2 >= s2.Length ? ' ' : s2[i2];
             char c3 = s3[i3];
-            //Console.WriteLine($"{c1} {c2} {c3}");
+            //Console.WriteLine($"{c1} {c2} {c3}"); 
             bool res = false;
-            if (c1 == c3 && c2 != c3)
+            if (c1 == c2 && c1 == c3)
             {
-                //Console.WriteLine("Taking 1");
-                // First character match, only increment that one
+                // All 3 match, check for both increments
+                res = dp(s1, s2, s3, i1 + 1, i2, i3 + 1) || dp(s1, s2, s3, i1, i2 + 1, i3 + 1);
+            }
+            else if (c1 == c3)
+            {
                 res = dp(s1, s2, s3, i1 + 1, i2, i3 + 1);
             }
-            else if (c2 == c3 && c1 != c3)
+            else if (c2 == c3)
             {
-                //Console.WriteLine("Taking 2");
-                // Second character match, only increment that one
                 res = dp(s1, s2, s3, i1, i2 + 1, i3 + 1);
-            }
-            else if (c1 == c3 && c2 == c3)
-            {
-                // All 3 characters match, don't know which to pick so let's try both
-                // and see if one ends up at a successful conclusion
-                //Console.WriteLine("Trying both");
-                bool try1 = dp(s1, s2, s3, i1 + 1, i2, i3 + 1);
-                bool try2 = dp(s1, s2, s3, i1, i2 + 1, i3 + 1);
-                res = try1 || try2;
             }
             map.Add((i1, i2, i3), res);
             //Console.WriteLine("Return false");
