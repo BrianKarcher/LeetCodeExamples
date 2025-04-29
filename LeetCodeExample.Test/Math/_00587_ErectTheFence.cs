@@ -14,13 +14,13 @@ namespace LeetCodeExample.Test;
 /// </summary>
 public class _00587_ErectTheFence
 {
-    // This has a bug.
+    // This has a bug. But it's close.
     public int[][] OuterTrees(int[][] trees)
     {
         // Ordered points that we will return.
         List<int[]> points = new();
         // Quick check 
-        //HashSet<(int, int)> hash = new();  
+        HashSet<(int, int)> hash = new();  
 
         // Find any of the left-most points as a starting point.
         // It doesn't matter which left-most point since the algorithm will handle any.
@@ -34,7 +34,7 @@ public class _00587_ErectTheFence
                 minX = trees[i][0];
             }
         }
-
+        Console.WriteLine($"Adding point {nextPoint}");
         points.Add(new int[] { nextPoint.x, nextPoint.y });
         // Start with a vector pointing straight down.
         // Going forward this is the vector between the last two points.
@@ -48,7 +48,9 @@ public class _00587_ErectTheFence
             Console.WriteLine($"CurrentVector: {currentVector}");
             nextPoint = (0, 0);
             double minAngle = double.MaxValue;
+            double minDistance = double.MaxValue;
             (int x, int y) lastPoint = (points[points.Count - 1][0], points[points.Count - 1][1]);
+            Console.WriteLine($"LastPoint: {lastPoint}");
             for (int i = 0; i < trees.Length; i++)
             {
                 // Skip the last point added.
@@ -57,15 +59,31 @@ public class _00587_ErectTheFence
                     continue;
                 }
                 Console.WriteLine($"Checking ({trees[i][0]}, {trees[i][1]})");
-                (int x, int y) newVector = (lastPoint.x - trees[i][0], lastPoint.y - trees[i][1]);
-                double angle = Math.Atan2(currentVector.y - newVector.y, currentVector.x - newVector.x);
-                Console.WriteLine($"Performing atan2 on ({currentVector.y - newVector.y}, {currentVector.x - newVector.x})");
+                (int x, int y) thisPoint = (trees[i][0], trees[i][1]);
+                (int x, int y) newVector = (thisPoint.x - lastPoint.x, thisPoint.y - lastPoint.y);
+                Console.WriteLine($"New vector: {newVector}");
+                // TODO - Atan2 is NOT the function to get the angle between vectors. To get angle between vectors, do:
+                // https://byjus.com/maths/angle-between-two-vectors/
+                // acos((A DOT B) / len(A)*len(b))
+                // To optimize the solution create a vector length function using the Distance formula
+                // and a Get Angle function using the formula above
+                //double angle = Math.Atan2(newVector.y - currentVector.y, newVector.x - currentVector.x);
+                double angle = Angle(currentVector, newVector);
+                Console.WriteLine($"Performing atan2 on ({newVector.y - currentVector.y}, {newVector.x - currentVector.x})");
                 Console.WriteLine($"Angle between {currentVector} and {newVector}: {angle}");
                 if (angle < minAngle)
                 {
                     Console.WriteLine($"Setting angle to {angle}");
                     minAngle = angle;
-                    nextPoint = (trees[i][0], trees[i][1]);
+                    nextPoint = thisPoint;
+                    minDistance = Distance(lastPoint, nextPoint);
+                }
+                else if (angle - minAngle < double.Epsilon && Distance(lastPoint, thisPoint) < minDistance)
+                {
+                    Console.WriteLine($"Setting angle to {angle}");
+                    minAngle = angle;
+                    nextPoint = thisPoint;
+                    minDistance = Distance(lastPoint, nextPoint);
                 }
             }
 
@@ -74,8 +92,37 @@ public class _00587_ErectTheFence
             {
                 return points.ToArray();
             }
+            Console.WriteLine($"Adding point {nextPoint}");
+            if (hash.Contains(nextPoint))
+            {
+                return points.ToArray();
+            }
             points.Add(new int[] { nextPoint.x, nextPoint.y });
-            currentVector = (lastPoint.x - nextPoint.x, lastPoint.y - nextPoint.y);
+            hash.Add(nextPoint);
+            currentVector = (nextPoint.x - lastPoint.x, nextPoint.y - lastPoint.y);
+            lastPoint = nextPoint;
         }
+    }
+
+    double Angle((int x, int y) v1, (int x, int y) v2)
+    {
+        return Math.Acos(Dot(v1, v2) / (Magnitude(v1) * Magnitude(v2)));
+    }
+
+    int Dot((int x, int y) v1, (int x, int y) v2)
+    {
+        return v1.x * v2.x + v1.y * v2.y;
+    }
+
+    double Distance((int x, int y) v1, (int x, int y) v2)
+    {
+        int x = v1.x - v2.x;
+        int y = v1.y - v2.y;
+        return Magnitude((x, y));
+    }
+
+    double Magnitude((int x, int y) v)
+    {
+        return Math.Sqrt(v.x * v.x + v.y * v.y);
     }
 }
