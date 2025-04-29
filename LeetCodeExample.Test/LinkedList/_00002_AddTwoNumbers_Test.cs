@@ -1,3 +1,4 @@
+using LeetCodeExample.Test.Common;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -47,18 +48,6 @@ namespace LeetCodeExample.Test
                 current.next = new ListNode(carryover);
             }
             return dummyHead.next;
-        }
-
-        //* Definition for singly-linked list.
-        public class ListNode
-        {
-            public int val;
-            public ListNode next;
-            public ListNode(int val = 0, ListNode next = null)
-            {
-                this.val = val;
-                this.next = next;
-            }
         }
     }
 }

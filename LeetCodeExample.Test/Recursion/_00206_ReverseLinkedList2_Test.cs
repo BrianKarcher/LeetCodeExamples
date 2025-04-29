@@ -1,3 +1,4 @@
+using LeetCodeExample.Test.Common;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -49,17 +50,6 @@ namespace LeetCodeExample.Test
             head.next.next = head;
             head.next = null;
             return p;
-        }
-
-        public class ListNode
-        {
-            public int val;
-            public ListNode next;
-            public ListNode(int val = 0, ListNode next = null)
-            {
-                this.val = val;
-                this.next = next;
-            }
         }
     }
 }
