@@ -18,6 +18,7 @@ namespace LeetCodeExample.Test
 
             for (int i = 0; i < heights.Length; i++)
             {
+                // Have we gone down in height?
                 while (stack.Peek() != -1 && heights[stack.Peek()] >= heights[i])
                 {
                     int currentHeight = heights[stack.Pop()];
@@ -27,6 +28,7 @@ namespace LeetCodeExample.Test
                 stack.Push(i);
             }
 
+            // Flush out the stack, comparing to the right side now
             while (stack.Peek() != -1)
             {
                 int currentHeight = heights[stack.Pop()];

@@ -36,37 +36,90 @@ namespace LeetCodeExample.Test
 
         public int CheckRecord(int n)
         {
-            total = 0;
+            //total = 0;
 
-            dp(n, 0, 0);
+            long[,,] dp = new long[n, 3, 2];
+            // base case
+            // n  l  a
+            dp[0, 0, 0] = 1;
+            dp[0, 0, 1] = 1;
+            dp[0, 1, 0] = 1;
+            dp[0, 1, 1] = 0;
+            dp[0, 2, 0] = 0;
+            dp[0, 2, 1] = 0;
+
+            // State-based
+
+            for (int i = 1; i < n; i++)
+            {
+                dp[i, 0, 0] = (dp[i - 1, 0, 0] + dp[i - 1, 1, 0] + dp[i - 1, 2, 0]) % M; // no consecLate, no A
+                dp[i, 0, 1] = (dp[i - 1, 0, 0] + dp[i - 1, 1, 0] + dp[i - 1, 2, 0]) % M + (dp[i - 1, 0, 1] + dp[i - 1, 1, 1] + dp[i - 1, 2, 1]) % M;
+                dp[i, 1, 0] = dp[i - 1, 0, 0] % M; // 1 ConsecLte, no A
+                dp[i, 1, 1] = dp[i - 1, 0, 1] % M; // 1 L, has A
+                dp[i, 2, 0] = dp[i - 1, 1, 0] % M; // 2 L, no A
+                dp[i, 2, 1] = dp[i - 1, 1, 1] % M; // 2 L, has A
+            }
+
+            long total = 0;
+            for (int l = 0; l < 3; l++)
+            {
+                for (int a = 0; a < 2; a++)
+                {
+                    total += dp[n - 1, l, a];
+                    total %= M;
+                }
+            }
+
+            //int total = dp(n, 0, 0);
+            return (int)total;
+        }
+
+        //int total;
+        int M = 1000000007;
+
+        /*public int CheckRecord(int n)
+        {
+            //total = 0;
+
+            int total = dp(n, 0, 0);
             return total;
         }
 
-        int total;
+        //int total;
         int M = 1000000007;
 
-        public void dp(int n, int absentCount, int lateRecurringCount)
+        Dictionary<(int n, int absentCount, int late), int> cache = new Dictionary<(int n, int absentCount, int late), int>();
+
+        public int dp(int n, int absentCount, int lateRecurringCount)
         {
             // base case
             if (n == 0)
             {
-                total = (total + 1) % M;
-                return;
+                return 1;
             }
 
+            if (cache.ContainsKey((n, absentCount, lateRecurringCount)))
+                return cache[(n, absentCount, lateRecurringCount)];
+
             // Can be Present
-            dp(n - 1, absentCount, 0);
+            int total = dp(n - 1, absentCount, 0);
+            total %= M;
 
             // Can be absent
             if (absentCount == 0)
             {
-                dp(n - 1, 1, 0);
+                total += dp(n - 1, 1, 0);
+                total %= M;
             }
             // Can be late
-            if (lateRecurringCount < 3)
+            if (lateRecurringCount < 2)
             {
-                dp(n - 1, absentCount, lateRecurringCount + 1);
+                total += dp(n - 1, absentCount, lateRecurringCount + 1);
+                total %= M;
             }
-        }
+            cache.Add((n, absentCount, lateRecurringCount), total);
+
+            return total;
+        }*/
     }
 }
