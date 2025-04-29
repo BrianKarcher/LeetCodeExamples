@@ -38,5 +38,40 @@ namespace LeetCodeExample.Test.Google
             double[,,] dp = new double[N, N, K + 1];
             return SolveDFS(dp, N, K, r, c);
         }
+
+
+        /*int[,] prob;
+
+        public double KnightProbability(int n, int k, int row, int column) {
+            prob = new int[k, 2];
+            dp(0, n, k, row, column);
+            double rtn = 1;
+            for (int i = 0; i < k; i++) {
+                // Prevent divide by zero
+                if (prob[i, 0] != 0)
+                    rtn *= (double) prob[i,1] / (double)prob[i,0];
+            }
+            return rtn;
+        }
+
+        List<(int r, int c)> dirs = new List<(int, int)> {(-2, 1), (-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1)};
+
+        void dp(int turn, int n, int k, int r, int c) {
+            if (turn == k) {
+                return;
+            }
+
+            foreach (var dir in dirs) {
+                int nr = r + dir.r;
+                int nc = c + dir.c;
+                // Increment attempt
+                prob[turn, 0]++;
+                if (nr >= 0 && nc >= 0 && nr < n && nc < n) {
+                    prob[turn, 1]++; // Increment "on board"
+                    // Still on the board, do next move
+                    dp(turn + 1, n, k, nr, nc);
+                }
+            }
+        }*/
     }
 }
