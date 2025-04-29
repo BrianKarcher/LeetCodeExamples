@@ -26,23 +26,22 @@ class Trie:
             node = node.children[index]
         node.isWord = True
 
-    def search(self, word: str) -> bool:
+    def search_prefix(self, word: str) -> Node:
         node = self.root
         for c in word:
             index = ord(c) - ord('a')
             if not node.children[index]:
-                return False
+                return None
             node = node.children[index]
-        return node.isWord
+        return node
+
+    def search(self, word: str) -> bool:
+        node = self.search_prefix(word)
+        return node is not None and node.isWord
 
     def startsWith(self, prefix: str) -> bool:
-        node = self.root
-        for c in prefix:
-            index = ord(c) - ord('a')
-            if not node.children[index]:
-                return False
-            node = node.children[index]
-        return True
+        node = self.search_prefix(prefix)
+        return node is not None
 
 
 # Your Trie object will be instantiated and called as such:
