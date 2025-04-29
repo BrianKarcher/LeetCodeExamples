@@ -14,7 +14,8 @@ namespace LeetCodeExample.Test
     {
         public IList<IList<int>> CombinationSum2(int[] candidates, int target)
         {
-            Perm(candidates, 0, target, -1, new List<int>());
+            Array.Sort(candidates);
+            Perm(candidates, 0, target, 0, new List<int>());
             return lst;
         }
 
@@ -22,31 +23,28 @@ namespace LeetCodeExample.Test
 
         void Perm(int[] candidates, int sum, int target, int n, IList<int> arr)
         {
-            string ar = "";
-            /*for (int i = 0; i < arr.Count; i++)
-                ar += arr[i] + ",";*
-            Console.WriteLine($"Sum: {sum}, target: {target}, n: {n}, arr length: {arr.Count} - {ar}");*/
-            // base case
-            //if (n > arr.Count)
-            //    return;
-
             if (sum == target)
             {
-                for (int i = 0; i < arr.Count; i++)
-                    ar += arr[i] + ",";
-                Console.WriteLine($"(ADDING LIST) {ar}");
-                //Console.WriteLine($"Adding list ");
-                lst.Add(arr.ToList());
+                List<int> newList = new List<int>(arr);
+                lst.Add(newList);
                 return;
             }
-            if (sum > target)
-                return;
 
-            for (int i = n + 1; i < candidates.Length; i++)
+            for (int i = n; i < candidates.Length; i++)
             {
-                //sum += arr[n];
+                // This one is a little complicated.
+                // Basically, for this entry in the combination, say we are looking for index 2
+                // and the value is 1, it is pointless to attempt to put another 1 into this same slot
+                // as it would just be a duplicate.
+                if (i > n && candidates[i] == candidates[i - 1])
+                    continue;
+
+                // Optimization: early stopping
+                if (sum + candidates[i] > target)
+                    break;
+
                 arr.Add(candidates[i]);
-                Perm(candidates, sum + candidates[i], target, i, arr);
+                Perm(candidates, sum + candidates[i], target, i + 1, arr);
                 // Backtrack
                 arr.RemoveAt(arr.Count - 1);
             }
