@@ -96,7 +96,7 @@ namespace LeetCodeExample.Test
                     node.right = null;
             }
 
-            // Not a leaf, return true
+            // Not a leaf, return false
             return false;
         }
 

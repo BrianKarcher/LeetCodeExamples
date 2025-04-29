@@ -77,7 +77,7 @@ namespace LeetCodeExample.Test
         //int total;
         int M = 1000000007;
 
-        /*public int CheckRecord(int n)
+        public int CheckRecord2(int n)
         {
             //total = 0;
 
@@ -86,7 +86,7 @@ namespace LeetCodeExample.Test
         }
 
         //int total;
-        int M = 1000000007;
+        //int M = 1000000007;
 
         Dictionary<(int n, int absentCount, int late), int> cache = new Dictionary<(int n, int absentCount, int late), int>();
 
@@ -120,6 +120,6 @@ namespace LeetCodeExample.Test
             cache.Add((n, absentCount, lateRecurringCount), total);
 
             return total;
-        }*/
+        }
     }
 }
