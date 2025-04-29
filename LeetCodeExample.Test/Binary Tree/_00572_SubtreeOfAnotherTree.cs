@@ -49,7 +49,14 @@ public class _00572_SubtreeOfAnotherTree
         return leftMatch && rightMatch;
     }
 
-    /*public bool IsSubtree(TreeNode root, TreeNode subRoot) {
+    // Can also work on a String Compare - only preorder or postorder though (not inorder) traversals!
+    /// <summary>
+    /// ////////////
+    /// </summary>
+    /// <param name="root"></param>
+    /// <param name="subRoot"></param>
+    /// <returns></returns>
+    public bool IsSubtree2(TreeNode root, TreeNode subRoot) {
         string tree = PrintTree(root);
         string subTree = PrintTree(subRoot);
         return tree.Contains(subTree);
@@ -59,6 +66,6 @@ public class _00572_SubtreeOfAnotherTree
         if (node == null) {
             return "null";
         }
-        return PrintTree(node.left) + "|" + node.val + "|" + PrintTree(node.right);
-    }*/
+        return "|" + PrintTree(node.left) + "|" + node.val + "|" + PrintTree(node.right);
+    }
 }
