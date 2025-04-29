@@ -24,6 +24,35 @@ namespace LeetCodeExample.Test
 
         public int[] FindOriginalArray(int[] changed)
         {
+            List<int> res = new List<int>();
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            // Ensures the smaller value will always come before its doubled value
+            var ordered = changed.OrderBy(i => i);
+            foreach (var num in ordered)
+            {
+                // If it's doubled, skip it
+                if (num % 2 == 0 && map.ContainsKey(num / 2) && map[num / 2] != 0)
+                {
+                    map[num / 2]--;
+                    // Do not add the double
+                    continue;
+                }
+                if (!map.ContainsKey(num))
+                    map.Add(num, 0);
+                map[num]++;
+                res.Add(num);
+            }
+
+            foreach (var item in map)
+            {
+                if (item.Value != 0)
+                    return new int[0];
+            }
+            return res.ToArray();
+        }
+
+        public int[] FindOriginalArray2(int[] changed)
+        {
             // Ensures the smaller value will always come before its doubled value
             var ordered = changed.OrderBy(i => i).ToList();
 

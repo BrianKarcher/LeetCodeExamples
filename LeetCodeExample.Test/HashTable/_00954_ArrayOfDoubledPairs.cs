@@ -12,6 +12,33 @@ namespace LeetCodeExample.Test
     {
         public bool CanReorderDoubled(int[] arr)
         {
+            var orderedArr = arr.OrderByDescending(i => Math.Abs(i));
+            // num : count
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            foreach (var n in orderedArr)
+            {
+                if (map.ContainsKey(n * 2) && map[n * 2] > 0)
+                {
+                    map[n * 2]--;
+                    // We removed the halved value, don't add either to the dictionary
+                    continue;
+                }
+                if (!map.ContainsKey(n))
+                    map.Add(n, 0);
+                // increase the count
+                map[n]++;
+            }
+            foreach (var item in map)
+            {
+                if (item.Value != 0)
+                    return false;
+            }
+            return true;
+        }
+
+
+        public bool CanReorderDoubled2(int[] arr)
+        {
             var sortedArray = arr.OrderBy(i => Math.Abs(i));
             Dictionary<int, int> count = new Dictionary<int, int>();
             foreach (var num in arr)
