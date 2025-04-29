@@ -21,14 +21,19 @@ public class _00208_ImplementTrie
     {
         public class Node
         {
-            public Dictionary<char, Node> Children = new();
+            public Node[] Children;
+            //public Dictionary<char, Node> Children = new();
             public char ch;
             public bool IsWord;
+            public Node()
+            {
+                Children = new Node[26];
+            }
         }
 
         Node root;
 
-        public Trie()
+        Trie()
         {
             root = new Node();
         }
@@ -38,41 +43,40 @@ public class _00208_ImplementTrie
             Node current = root;
             for (int i = 0; i < word.Length; i++)
             {
-                if (!current.Children.TryGetValue(word[i], out Node child))
+                if (current.Children[word[i] - 'a'] == null)
                 {
-                    child = new Node();
+                    Node child = new Node();
                     child.ch = word[i];
-                    current.Children.Add(word[i], child);
+                    current.Children[word[i] - 'a'] = child;
                 }
-                current = child;
+                current = current.Children[word[i] - 'a'];
             }
             current.IsWord = true;
         }
 
         public bool Search(string word)
         {
-            (_, bool IsWord) = SearchPrefix(word);
-            return IsWord;
+            Node node = SearchPrefix(word);
+            return node != null && node.IsWord;
         }
 
         public bool StartsWith(string prefix)
         {
-            (bool IsFound, _) = SearchPrefix(prefix);
-            return IsFound;
+            return SearchPrefix(prefix) != null;
         }
 
-        private (bool IsFound, bool IsWord) SearchPrefix(string prefix)
+        private Node SearchPrefix(string prefix)
         {
             Node current = root;
             for (int i = 0; i < prefix.Length; i++)
             {
-                if (!current.Children.TryGetValue(prefix[i], out Node child))
+                if (current.Children[prefix[i] - 'a'] == null)
                 {
-                    return (false, false);
+                    return null;
                 }
-                current = child;
+                current = current.Children[prefix[i] - 'a'];
             }
-            return (true, current.IsWord);
+            return current;
         }
     }
 
