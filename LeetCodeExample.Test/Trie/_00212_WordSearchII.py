@@ -15,8 +15,7 @@ class Solution:
                 node = node[c]
             node.setdefault('$')
         # print(trie)
-        # Prevent duplicates
-        ans = set()
+        ans = []
         dirs = [(1, 0), (-1, 0), (0, -1), (0, 1)]
         def rec(r: int, c: int, word: str, node: dict, visited: set):
             # Base case
@@ -29,7 +28,7 @@ class Solution:
             word += letter
             # print(f'{r} {c} {word} {node}')
             if '$' in child:
-                ans.add(word)
+                ans.append(word)
                 child.pop('$')
             
             visited.add((r, c))
@@ -53,7 +52,7 @@ class Solution:
             for col in range(cols):
                 rec(row, col, '', trie, set())
         
-        return list(ans)
+        return ans
 
 
 
