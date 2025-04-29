@@ -16,14 +16,14 @@ class Solution:
         def rec(node: Optional[TreeNode]) -> int:
             if not node:
                 return 0
-            # Find the max path from the leaves to this node
+            # There are four ways a path can go through this node
+            # Just the node, left to node, right to node, or left to node to right (travels though)
+            # We need to test all three to find the max
             left = rec(node.left)
             right = rec(node.right)
-            leftMid = left + node.val
-            rightMid = right + node.val
-            leftrightMid = left + right + node.val
-            largest = max(node.val, leftMid, rightMid, leftrightMid)
-            self.ans = max(self.ans, largest)
-            return max(node.val, leftMid, rightMid)
+            self.ans = max(self.ans, node.val, left + node.val, right + node.val, left + right + node.val)
+            # As for returning a value to the calling node, we can only return on of three paths 
+            # Just this node, left to node, or right to node. Note that we can't return left to node to right as that isn't a valid path 
+            return max(node.val, left + node.val, right + node.val)
         rec(root)
         return self.ans
