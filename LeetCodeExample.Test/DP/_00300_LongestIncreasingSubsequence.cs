@@ -46,12 +46,12 @@ namespace LeetCodeExample.Test
             while (left < right)
             {
                 mid = (left + right) / 2;
-                if (sub.[mid] == num)
+                if (sub[mid] == num)
                 {
                     return mid;
                 }
 
-                if (sub.[mid] < num)
+                if (sub[mid] < num)
                 {
                     left = mid + 1;
                 }
