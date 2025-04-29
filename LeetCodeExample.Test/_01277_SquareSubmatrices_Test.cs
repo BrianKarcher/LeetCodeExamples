@@ -32,56 +32,89 @@ namespace LeetCodeExample.Test
 
         public int CountSquares(int[][] matrix)
         {
-            int squareCount = 0;
+            int rows = matrix.Length;
+            int cols = matrix[0].Length;
+            int[,] dp = new int[rows,cols];
+            int total = 0;
 
-            // Iterate over each square
-            for (int y = 0; y < matrix.Length; y++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int x = 0; x < matrix[0].Length; x++)
+                for (int j = 0; j < cols; j++)
                 {
-                    squareCount += GetExpandedSquares(matrix, x, y, 1);
+                    if (matrix[i][j] == 0) continue;
+                    else
+                    {
+                        if (i == 0 || j == 0)
+                        {
+                            dp[i,j] = 1;
+                        }
+                        else
+                        {
+                            int up = dp[i - 1,j];
+                            int left = dp[i,j - 1];
+                            int diag = dp[i - 1,j - 1];
+                            dp[i,j] = Math.Min(up, Math.Min(left, diag)) + 1;
+                        }
+                        total += dp[i,j];
+                    }
                 }
             }
+            return total;
 
-            return squareCount;
         }
 
-        public int GetExpandedSquares(int[][] matrix, int x, int y, int size)
-        {
-            // Bounds check
-            if (y + size > matrix.Length || x + size > matrix[0].Length)
-                return 0;
+        //public int CountSquares(int[][] matrix)
+        //{
+        //    int squareCount = 0;
 
-            int count = 0;
+        //    // Iterate over each square
+        //    for (int y = 0; y < matrix.Length; y++)
+        //    {
+        //        for (int x = 0; x < matrix[0].Length; x++)
+        //        {
+        //            squareCount += GetExpandedSquares(matrix, x, y, 1);
+        //        }
+        //    }
 
-            // On each expand, only need to check the bottom row
-            // TODO: Find out some way to speed this up
+        //    return squareCount;
+        //}
 
-            for (int i = x; i < x + size; i++)
-            {
-                if (matrix[y + size - 1][i] == 0)
-                {
-                    return 0;
-                }
-            }
+        //public int GetExpandedSquares(int[][] matrix, int x, int y, int size)
+        //{
+        //    // Bounds check
+        //    if (y + size > matrix.Length || x + size > matrix[0].Length)
+        //        return 0;
 
-            // And the right column
-            for (int i = y; i < y + size; i++)
-            {
-                if (matrix[i][x + size - 1] == 0)
-                {
-                    return 0;
-                }
-            }
+        //    int count = 0;
 
-            // This square checks out
-            count++;
+        //    // On each expand, only need to check the bottom row
+        //    // TODO: Find out some way to speed this up
 
-            // Expand the squares
+        //    for (int i = x; i < x + size; i++)
+        //    {
+        //        if (matrix[y + size - 1][i] == 0)
+        //        {
+        //            return 0;
+        //        }
+        //    }
 
-            count += GetExpandedSquares(matrix, x, y, size + 1);
+        //    // And the right column
+        //    for (int i = y; i < y + size; i++)
+        //    {
+        //        if (matrix[i][x + size - 1] == 0)
+        //        {
+        //            return 0;
+        //        }
+        //    }
 
-            return count;
-        }
+        //    // This square checks out
+        //    count++;
+
+        //    // Expand the squares
+
+        //    count += GetExpandedSquares(matrix, x, y, size + 1);
+
+        //    return count;
+        //}
     }
 }
