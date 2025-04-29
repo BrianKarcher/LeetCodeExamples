@@ -12,6 +12,9 @@ namespace LeetCodeExample.Test
     /// </summary>
     public class _00300_LongestIncreasingSubsequence
     {
+        // https://www.youtube.com/watch?v=cjWnW0hdF1Y
+        // Says if the interviewer wants nlogn without a hint, walk out of the room
+
         public int lengthOfLIS(int[] nums)
         {
             List<int> sub = new();
