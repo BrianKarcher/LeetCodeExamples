@@ -97,7 +97,8 @@ namespace LeetCodeExample.Test
                     }
                     else
                     {
-                        parent[rooty] = rootx; rank[rootx] += 1;
+                        parent[rooty] = rootx;
+                        rank[rootx] += 1;
                     }
                     --count;
                 }

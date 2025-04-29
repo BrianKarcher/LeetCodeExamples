@@ -76,7 +76,7 @@ namespace LeetCodeExample.Test
             }
 
             public int Find(int x)
-            {
+            { // path compression
                 if (parent[x] != x) parent[x] = Find(parent[x]);
                 return parent[x];
             }

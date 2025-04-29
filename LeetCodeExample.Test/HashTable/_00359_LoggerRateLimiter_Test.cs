@@ -26,10 +26,27 @@ namespace LeetCodeExample.Test
         {
         }
 
+        private readonly Dictionary<string, int> messages = new Dictionary<string, int>();
+
+        public bool ShouldPrintMessage(int timestamp, string message)
+        {
+            if (!messages.ContainsKey(message))
+            {
+                messages.Add(message, timestamp + 10);
+                return true;
+            }
+            if (timestamp < messages[message])
+            {
+                return false;
+            }
+            messages[message] = timestamp + 10;
+            return true;
+        }
+
         // Message : timestamp
         Dictionary<string, int> timer = new Dictionary<string, int>();
 
-        public bool ShouldPrintMessage(int timestamp, string message)
+        public bool ShouldPrintMessage2(int timestamp, string message)
         {
             if (!timer.ContainsKey(message))
             {
