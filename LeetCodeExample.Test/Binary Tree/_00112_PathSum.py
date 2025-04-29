@@ -13,10 +13,11 @@ class Solution:
         def rec(node: Optional[TreeNode], sum: int) -> bool:
             if not node:
                 return False
+            sum += node.val
             # Ensure to only check on a leaf node
-            if not node.left and not node.right and sum + node.val == targetSum:
+            if not node.left and not node.right and sum == targetSum:
                 return True
-            if rec(node.left, sum + node.val):
+            if rec(node.left, sum):
                 return True
-            return rec(node.right, sum + node.val)
+            return rec(node.right, sum)
         return rec(root, 0)
