@@ -71,24 +71,24 @@ namespace LeetCodeExample.Test
 
         // https://leetcode.com/problems/number-of-matching-subsequences/discuss/117634/Efficient-and-simple-go-through-words-in-parallel-with-explanation/
 
-        public int numMatchingSubseq(String S, String[] words)
-        {
-            List<int[]>[] waiting = new List<int>[128];
-            for (int c = 0; c <= 'z'; c++)
-                waiting[c] = new ArrayList();
-            for (int i = 0; i < words.length; i++)
-                waiting[words[i].charAt(0)].add(new Integer[] { i, 1 });
-            for (char c : S.toCharArray())
-            {
-                List<Integer[]> advance = new ArrayList(waiting[c]);
-                waiting[c].clear();
-                for (Integer[] a : advance)
-                    waiting[a[1] < words[a[0]].length() ? words[a[0]].charAt(a[1]++) : 0].add(a);
-            }
-            return waiting[0].size();
-        }
+        //public int numMatchingSubseq(String S, String[] words)
+        //{
+        //    List<int[]>[] waiting = new List<int>[128];
+        //    for (int c = 0; c <= 'z'; c++)
+        //        waiting[c] = new ArrayList();
+        //    for (int i = 0; i < words.length; i++)
+        //        waiting[words[i].charAt(0)].add(new Integer[] { i, 1 });
+        //    for (char c : S.toCharArray())
+        //    {
+        //        List<Integer[]> advance = new ArrayList(waiting[c]);
+        //        waiting[c].clear();
+        //        for (Integer[] a : advance)
+        //            waiting[a[1] < words[a[0]].length() ? words[a[0]].charAt(a[1]++) : 0].add(a);
+        //    }
+        //    return waiting[0].size();
+        //}
 
-        public int NumMatchingSubseq(string s, string[] words)
+        public int NumMatchingSubseq2(string s, string[] words)
         {
             int count = 0;
 

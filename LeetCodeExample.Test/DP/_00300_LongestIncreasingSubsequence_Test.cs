@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LeetCodeExample.Test
 {
@@ -18,7 +19,7 @@ namespace LeetCodeExample.Test
         [Test]
         public void Test()
         {
-
+            var ans = lengthOfLIS2(new int[] { 5, 7, -24, 12, 10, 2, 3, 12, 5, 6, 35 });
         }
 
         // Big O (worst case): O(n^2)
@@ -49,6 +50,56 @@ namespace LeetCodeExample.Test
             }
 
             return longest;
+        }
+
+        public int[] lengthOfLIS2(int[] nums)
+        {
+            int[] dp = new int[nums.Length];
+            Array.Fill(dp, 1);
+
+            int[] refer = new int[nums.Length];
+            Array.Fill(refer, -1);
+
+            //(int a, int b) c;
+            //c.a = 1;
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (nums[i] > nums[j])
+                    {
+                        if (dp[j] + 1 > dp[i])
+                        {
+                            dp[i] = dp[j] + 1;
+                            refer[i] = j;
+                        }
+                    }
+                }
+            }
+
+            int longest = 0;
+            int longestIndex = -1;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (dp[i] > longest)
+                {
+                    longest = dp[i];
+                    longestIndex = i;
+                }
+            }
+
+            // We found the end of the longest sequence, loop back through it to build it
+            int current = longestIndex;
+            List<int> seq = new List<int>();
+            while (current != -1)
+            {
+                seq.Add(nums[current]);
+                current = refer[current];
+            }
+
+            seq.Reverse();
+            return seq.ToArray();
         }
     }
 }
