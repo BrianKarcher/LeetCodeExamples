@@ -3,6 +3,46 @@
 # .
 
 from typing import List
+import bisect
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        sub = []
+        for num in nums:
+            mid = bisect.bisect_left(sub, num)
+            if mid == len(sub):
+                sub.append(num)
+            else:
+                sub[mid] = num
+        return len(sub)
+    
+from typing import List
+import bisect
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        sub = []
+
+        def search(num: int) -> int:
+            l = 0
+            r = len(sub) - 1
+            while l < r:
+                mid = (l + r) // 2
+                if sub[mid] == num:
+                    return mid
+                elif sub[mid] < num:
+                    l = mid + 1
+                else:
+                    r = mid
+            return l
+
+        for num in nums:
+            mid = bisect.bisect_left(sub, num)
+            if mid == len(sub):
+                sub.append(num)
+            else:
+                sub[mid] = num
+        return len(sub)
+
+from typing import List
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         if len(nums) <= 1:
