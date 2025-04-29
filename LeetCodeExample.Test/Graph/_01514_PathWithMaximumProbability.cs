@@ -16,34 +16,22 @@ namespace LeetCodeExample.Test
         public double MaxProbability(int n, int[][] edges, double[] succProb, int start, int end)
         {
             // Create an Adjacency Matrix since we are dealing with weights
-            //List<int>[] adj = new List<int>[n];
-            double[,] adj = new double[n, n];
+            List<(int i, double p)>[] adj = new List<(int, double)>[n];
+            for (int i = 0; i < n; i++)
+                adj[i] = new List<(int i, double p)>();
 
             for (int i = 0; i < edges.Length; i++)
             {
-                adj[edges[i][0], edges[i][1]] = succProb[i];
+                adj[edges[i][0]].Add((edges[i][1], succProb[i]));
                 // Undirected graph, so also do the other direction
-                adj[edges[i][1], edges[i][0]] = succProb[i];
-                //adj[edges[0]].Add(edges[1]);
-                // Undirected graph, so also do the other direction
-                //adj[edges[1]].Add(edges[0]);
+                adj[edges[i][1]].Add((edges[i][0], succProb[i]));
             }
 
             // Never revisit a node
             double[] visited = new double[n];
-            //bool[] visited = new bool[n];
             // We will always follow the highest probabilty chain since probabilities will never go up (they are only 0 to 1)
             PriorityQueue<(int node, double probability)> pq = new PriorityQueue<(int node, double probability)>((i1, i2) => i1.probability > i2.probability ? -1 : 1);
 
-            //double prob = 1;
-            // Enter all edges from the starting node to kickstart things
-            /*for (int i = 0; i < n; i++)
-            {
-                if (adj[start, i] != 0)
-                {
-                    pq.Enqueue((i, adj[start, i]));
-                }
-            }*/
             pq.Enqueue((start, 1));
             visited[start] = 1;
 
@@ -55,17 +43,14 @@ namespace LeetCodeExample.Test
                     return node.probability;
 
                 // Add the adjacent nodes and their new probabilites to the pq
-                for (int i = 0; i < n; i++)
+                foreach (var otherNode in adj[node.node])
                 {
-                    if (adj[node.node, i] != 0)
-                    {
-                        var newProb = adj[node.node, i] * node.probability;
-                        if (newProb < visited[i])
-                            continue;
-                        visited[i] = newProb;
-                        //Console.WriteLine($"Queueing {i}, prob {newProb}");
-                        pq.Enqueue((i, newProb));
-                    }
+                    var newProb = otherNode.p * node.probability;
+                    if (newProb <= visited[otherNode.i])
+                        continue;
+                    visited[otherNode.i] = newProb;
+                    //Console.WriteLine($"Queueing {i}, prob {newProb}");
+                    pq.Enqueue((otherNode.i, newProb));
                 }
             }
 
