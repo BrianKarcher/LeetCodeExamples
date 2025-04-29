@@ -69,29 +69,12 @@ namespace LeetCodeExample.Test
         //    return level;
         //}
 
-        //Time complexity: \mathcal{O}( \frac{\sqrt{n}^{h+1} - 1}{\sqrt{n} - 1} ) = \mathcal{O}(n^{\frac{h}{2}})O( 
-//        n
-//​
-// −1
-//n
-//​
-  
-//h+1
-// −1
-//​
-// )=O(n
-//2
-//h
-//​
- 
-// ) where h is the height of the N-ary tree.One can see the detailed explanation on the previous Approach #3.
-
-//Space complexity: \mathcal{ O}\Big((\sqrt{ n})^h\Big)O((
-//n
-//​
-// )
-//h
-// ), which is also the maximal number of nodes that can appear at the level h.As one can see, though we keep a list of square_nums, the main consumption of the space is the queue variable, which keep track of the remainders to visit for a given level of N-ary tree.
+        // Time Complexity: O(n ^ h/2)
+        // where h is the maximal number of recursion that could happen. As one might notice, the above formula actually resembles the formula to calculate the number of nodes in a complete N-ary tree. Indeed, the trace of recursive calls in the algorithm form a N-ary tree, where N is the number of squares in square_nums, i.e. \sqrt{n} 
+        // . In the worst case, we might have to traverse the entire tree to find the solution.
+        // Space Complexity: O(sqrt(n) ^ h)
+        // We keep a list of square_nums, which is of \sqrt{n} ​
+        //  size.In addition, we would need additional space for the recursive call stack.But as we will learn later, the size of the call track would not exceed 4.
         public int NumSquares(int n)
         {
             List<int> perfectSquares = new List<int>();
