@@ -24,6 +24,20 @@ namespace LeetCodeExample.Test
         // LeetCode example
         // DP
 
+        public IList<int> GetRow(int rowIndex)
+        {
+            int[] A = new int[rowIndex + 1];
+            A[0] = 1;
+            for (int i = 1; i < rowIndex + 1; i++)
+                for (int j = i; j >= 1; j--)
+                    A[j] += A[j - 1];
+            return A;
+        }
+
+        /// <summary>
+        /// /////////////////////////
+        /// </summary>
+
         private Dictionary<(int Row, int Col), int> cache = new Dictionary<(int Row, int Col), int>();
 
         private int getNum2(int row, int col)

@@ -41,5 +41,25 @@ namespace LeetCodeExample.Test
             }
             return rows;
         }
+
+        public IList<IList<int>> Generate2(int numRows)
+        {
+            List<IList<int>> rtn = new List<IList<int>>();
+            List<int> oldList = new List<int> { 1 };
+            rtn.Add(oldList);
+            for (int i = 2; i <= numRows; i++)
+            {
+                List<int> newList = new List<int>();
+                rtn.Add(newList);
+                for (int j = 0; j < i; j++)
+                {
+                    int firstNum = j == 0 ? 0 : oldList[j - 1];
+                    int secondNum = j == i - 1 ? 0 : oldList[j];
+                    newList.Add(firstNum + secondNum);
+                }
+                oldList = newList;
+            }
+            return rtn;
+        }
     }
 }
