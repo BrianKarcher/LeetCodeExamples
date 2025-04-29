@@ -9,6 +9,7 @@
 # int getMin() retrieves the minimum element in the stack.
 # You must implement a solution with O(1) time complexity for each function.
 
+# This solution uses two stacks, saves space by using a counter for the min stack
 class MinStack:
 
     def __init__(self):
