@@ -28,6 +28,37 @@ namespace LeetCodeExample.Test
             Assert.AreEqual(5, answer);
         }
 
+        int?[,] memo;
+        int totalSum;
+
+        public int FindTargetSumWays(int[] nums, int target)
+        {
+            totalSum = nums.Sum(i => i);
+            // nums can become all negative or all positive, so the range is
+            // totalSum * 2, with totalSum lying in the middle of said range when indexing.
+            memo = new int?[nums.Length, totalSum * 2 + 1];
+            return dp(nums, nums.Length - 1, 0, target);
+        }
+
+        int dp(int[] nums, int index, int sum, int target)
+        {
+            // base case
+            if (index < 0)
+            {
+                return sum == target ? 1 : 0;
+            }
+
+            if (memo[index, totalSum + sum] != null)
+            {
+                return memo[index, totalSum + sum].Value;
+            }
+
+            int ans = dp(nums, index - 1, sum + nums[index], target)
+                + dp(nums, index - 1, sum - nums[index], target);
+            memo[index, totalSum + sum] = ans;
+            return ans;
+        }
+
         //public int FindTargetSumWays(int[] nums, int target)
         //{
         //    visited = new HashSet<string>();
@@ -77,7 +108,7 @@ namespace LeetCodeExample.Test
         //    return -1;
         //}
 
-        public int FindTargetSumWays(int[] nums, int target)
+        public int FindTargetSumWays2(int[] nums, int target)
         {
             Recurse(nums, 0, 0, target);
             return count;
