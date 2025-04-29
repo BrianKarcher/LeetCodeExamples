@@ -11,6 +11,7 @@
 # 0: your guess is equal to the number I picked (i.e. num == pick).
 # Return the number that I picked.
 
+# My answer
 class Solution:
     def guessNumber(self, n: int) -> int:
         l, r = 1, 2**31 - 1
