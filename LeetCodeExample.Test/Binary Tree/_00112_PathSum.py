@@ -10,6 +10,20 @@ class TreeNode:
 from typing import Optional
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        def rec(node: Optional[TreeNode], val: int) -> bool:
+            if not node:
+                return False
+            node_val = node.val + val
+            if node.left == node.right == None:
+                return targetSum == node_val
+            return rec(node.left, node_val) or rec(node.right, node_val)
+        return rec(root, 0)
+    
+
+
+# Old try
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         def rec(node: Optional[TreeNode], sum: int) -> bool:
             if not node:
                 return False
