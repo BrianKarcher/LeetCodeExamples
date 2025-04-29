@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LeetCodeExample.Test
 {
@@ -23,6 +24,11 @@ namespace LeetCodeExample.Test
 
         public int MaxArea(int[] height)
         {
+            List<string> lst = new List<string>();
+            //lst.OrderBy();
+            string[] log = new string[];
+            Array.Sort(log);
+            Char.IsDigit()
             int lo = 0;
             int hi = height.Length - 1;
             int maxArea = 0;
