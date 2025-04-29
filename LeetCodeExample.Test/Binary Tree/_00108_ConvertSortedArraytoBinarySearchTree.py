@@ -6,21 +6,11 @@ class TreeNode:
         self.right = right
 from typing import Optional
 from typing import List
-
 class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
-        return self.recurse(nums, 0, len(nums) - 1)
-    
-    def recurse(self, nums: List[int], l: int, r: int):
-        # base case
-        if r < l:
-            return None
-        if r == l:
-            return TreeNode(nums[r])
-        
-        # split the list in two around the mid point
-        mid = int((l + r) / 2)
-        left = self.recurse(nums, l, mid - 1)
-        right = self.recurse(nums, mid + 1, r)
-        # the mid point is this node
-        return TreeNode(nums[mid], left, right)
+        def recurse(l: int, r: int) -> Optional[TreeNode]:
+            if l > r:
+                return None
+            mid = (l + r) // 2
+            return TreeNode(nums[mid], recurse(l, mid - 1), recurse(mid + 1, r))
+        return recurse(0, len(nums) - 1)
