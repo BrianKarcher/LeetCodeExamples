@@ -27,78 +27,160 @@ namespace LeetCodeExample.Test
 
         }
 
-        // Haven't touched it yet
-        const int WHITE = 0;
-        // Seen it, if see gray again then we have cycled - invalid graph!
-        const int GRAY = 1;
-        // Completed node
-        const int BLACK = 2;
-
-        Dictionary<int, List<int>> AdjList;
-        int[] Color;
-        bool IsPossible = true;
-
-        List<int> finalList;
+        // Topoligical Sort to find the answer
+        int WHITE = 0;
+        int GRAY = 1;
+        int BLACK = 2;
+        int[] colors;
+        Dictionary<int, List<int>> adj;
 
         public int[] FindOrder(int numCourses, int[][] prerequisites)
         {
-            AdjList = new Dictionary<int, List<int>>();
-            // int's default to 0, so no need to set these to white
-            Color = new int[numCourses];
-
-            // Fill Adj List
-            for (int i = 0; i < prerequisites.Length; i++)
-            {
-                var adj = AdjList.GetValueOrDefault(prerequisites[i][0], new List<int>());
-                adj.Add(prerequisites[i][1]);
-                AdjList.TryAdd(prerequisites[i][0], adj);
-            }
-
-            finalList = new List<int>();
-
+            colors = new int[numCourses];
+            adj = new Dictionary<int, List<int>>();
+            // Initialization
             for (int i = 0; i < numCourses; i++)
             {
-                if (Color[i] == WHITE)
+                adj.Add(i, new List<int>());
+            }
+
+            // Set up directional graph
+            for (int i = 0; i < prerequisites.Length; i++)
+            {
+                adj[prerequisites[i][0]].Add(prerequisites[i][1]);
+            }
+
+            Stack<int> stack = new Stack<int>();
+            for (int i = 0; i < numCourses; i++)
+            {
+                if (colors[i] == WHITE)
                 {
-                    dfs(i);
+                    dfs(stack, i);
                 }
             }
 
-            if (!IsPossible)
+            if (!isPossible)
                 return new int[0];
 
-            return finalList.ToArray();
+            List<int> rtn = new List<int>();
+            while (stack.Count != 0)
+            {
+                rtn.Add(stack.Pop());
+            }
+
+            var rtnArr = rtn.ToArray();
+
+            Array.Reverse(rtnArr);
+
+            return rtnArr;
+            //return stack.ToArray();
         }
 
-        void dfs(int node)
+        bool isPossible = true;
+        //int[] complete;
+        // Do topoligical sort
+        void dfs(Stack<int> stack, int course)
         {
-            if (!IsPossible)
+            if (!isPossible)
                 return;
 
-            if (Color[node] == BLACK)
-                return;
-
-            // Revisited node, topolography graph is not possible.
-            if (Color[node] == GRAY)
+            if (colors[course] == BLACK)
             {
-                IsPossible = false;
                 return;
             }
 
-            Color[node] = GRAY;
-
-            // It's a DFS so the farthest prerequisite gets added to the list first
-            if (AdjList.TryGetValue(node, out var adjList))
+            // Cycle check
+            if (colors[course] == GRAY)
             {
-                foreach (var adj in adjList)
-                {
-                    dfs(adj);
-                }
+                isPossible = false;
+                return;
             }
 
-            Color[node] = BLACK;
+            colors[course] = GRAY;
 
-            finalList.Add(node);
+            var lstAdj = adj[course];
+            for (int j = 0; j < lstAdj.Count; j++)
+            {
+                dfs(stack, lstAdj[j]);
+            }
+            stack.Push(course);
+
+            colors[course] = BLACK;
+            return;
         }
+
+        //// Haven't touched it yet
+        //const int WHITE = 0;
+        //// Seen it, if see gray again then we have cycled - invalid graph!
+        //const int GRAY = 1;
+        //// Completed node
+        //const int BLACK = 2;
+
+        //Dictionary<int, List<int>> AdjList;
+        //int[] Color;
+        //bool IsPossible = true;
+
+        //List<int> finalList;
+
+        //public int[] FindOrder(int numCourses, int[][] prerequisites)
+        //{
+        //    AdjList = new Dictionary<int, List<int>>();
+        //    // int's default to 0, so no need to set these to white
+        //    Color = new int[numCourses];
+
+        //    // Fill Adj List
+        //    for (int i = 0; i < prerequisites.Length; i++)
+        //    {
+        //        var adj = AdjList.GetValueOrDefault(prerequisites[i][0], new List<int>());
+        //        adj.Add(prerequisites[i][1]);
+        //        AdjList.TryAdd(prerequisites[i][0], adj);
+        //    }
+
+        //    finalList = new List<int>();
+
+        //    for (int i = 0; i < numCourses; i++)
+        //    {
+        //        if (Color[i] == WHITE)
+        //        {
+        //            dfs(i);
+        //        }
+        //    }
+
+        //    if (!IsPossible)
+        //        return new int[0];
+
+        //    return finalList.ToArray();
+        //}
+
+        //void dfs(int node)
+        //{
+        //    if (!IsPossible)
+        //        return;
+
+        //    if (Color[node] == BLACK)
+        //        return;
+
+        //    // Revisited node, topolography graph is not possible.
+        //    if (Color[node] == GRAY)
+        //    {
+        //        IsPossible = false;
+        //        return;
+        //    }
+
+        //    Color[node] = GRAY;
+
+        //    // It's a DFS so the farthest prerequisite gets added to the list first
+        //    if (AdjList.TryGetValue(node, out var adjList))
+        //    {
+        //        foreach (var adj in adjList)
+        //        {
+        //            dfs(adj);
+        //        }
+        //    }
+
+        //    Color[node] = BLACK;
+
+        //    finalList.Add(node);
+        //}
     }
 }
