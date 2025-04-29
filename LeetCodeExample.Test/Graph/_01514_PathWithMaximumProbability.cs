@@ -30,36 +30,40 @@ namespace LeetCodeExample.Test
             }
 
             // Never revisit a node
-            bool[] visited = new bool[n];
+            double[] visited = new double[n];
+            //bool[] visited = new bool[n];
             // We will always follow the highest probabilty chain since probabilities will never go up (they are only 0 to 1)
             PriorityQueue<(int node, double probability)> pq = new PriorityQueue<(int node, double probability)>((i1, i2) => i1.probability > i2.probability ? -1 : 1);
 
             //double prob = 1;
             // Enter all edges from the starting node to kickstart things
-            for (int i = 0; i < n; i++)
+            /*for (int i = 0; i < n; i++)
             {
                 if (adj[start, i] != 0)
                 {
                     pq.Enqueue((i, adj[start, i]));
                 }
-            }
-            visited[start] = true;
+            }*/
+            pq.Enqueue((start, 1));
+            visited[start] = 1;
 
             while (pq.Count() != 0)
             {
                 var node = pq.Dequeue();
+                //Console.WriteLine($"Node {node.node}, prob: {node.probability}");
                 if (node.node == end)
                     return node.probability;
 
                 // Add the adjacent nodes and their new probabilites to the pq
                 for (int i = 0; i < n; i++)
                 {
-                    if (visited[i])
-                        continue;
                     if (adj[node.node, i] != 0)
                     {
                         var newProb = adj[node.node, i] * node.probability;
-                        visited[i] = true;
+                        if (newProb < visited[i])
+                            continue;
+                        visited[i] = newProb;
+                        //Console.WriteLine($"Queueing {i}, prob {newProb}");
                         pq.Enqueue((i, newProb));
                     }
                 }
