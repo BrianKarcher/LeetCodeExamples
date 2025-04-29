@@ -69,6 +69,30 @@ namespace LeetCodeExample.Test.DP
             return count;
         }
 
+        public int NumSquares3(int n)
+        {
+            int[] dp = new int[n + 1];
+            Array.Fill(dp, Int32.MaxValue);
+            dp[0] = 0;
+            int maxSquareIndex = (int)Math.Sqrt(n) + 1;
+            int[] squareNums = new int[maxSquareIndex];
+            // Find perfect squares.
+            for (int i = 1; i < maxSquareIndex; i++)
+            {
+                squareNums[i] = i * i;
+            }
+            for (int i = 1; i <= n; i++)
+            {
+                for (int s = 1; s < maxSquareIndex; s++)
+                {
+                    if (i < squareNums[s])
+                        break;
+                    dp[i] = Math.Min(dp[i], dp[i - squareNums[s]] + 1);
+                }
+            }
+            return dp[n];
+        }
+
         //public int NumSquares(int n)
         //{
         //    List<int> perfectSquares = new List<int>();
