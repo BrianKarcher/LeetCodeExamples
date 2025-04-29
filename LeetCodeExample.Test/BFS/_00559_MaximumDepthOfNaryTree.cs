@@ -35,4 +35,5 @@ namespace LeetCodeExample.Test
             }
             return depth;
         }
+    }
 }

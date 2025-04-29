@@ -16,46 +16,46 @@ namespace LeetCodeExample.Test
     /// </summary>
     public class _00729_MyCalendarI
     {
-        public class MyCalendar
-        {
-            // key: start, value: end
-            private SortedSet<int> set = new SortedSet<int>();
+        //public class MyCalendar
+        //{
+        //    // key: start, value: end
+        //    private SortedSet<int> set = new SortedSet<int>();
 
-            public MyCalendar()
-            {
+        //    public MyCalendar()
+        //    {
 
-            }
+        //    }
 
-            public bool Book(int start, int end)
-            {
-                //SortedDictionary<int, int> dict;
-                //dict.cei
-                // binary search
-                //this.set.view
-                set.GetViewBetween
-                int li = BinarySearch(start);
-                //Console.WriteLine($"bs: {li}");
-                if (li < 0 || li >= this.list.Count)
-                {
-                    //Console.WriteLine($"Adding {start}, {end - 1}");
-                    this.list.Add(start, end - 1);
-                    return true;
-                }
-                for (int i = li; i < this.list.Count && this.list.Keys[i] <= end; i++)
-                {
-                    int sv = this.list.Keys[i];
-                    int ev = this.list.Values[i];
-                    //Console.WriteLine($"Comparing {start}, {end} to {sv}, {ev}");
-                    if (sv <= end - 1 && ev >= start)
-                    { // Overlap check
-                        return false;
-                    }
-                }
-                //Console.WriteLine($"Adding {start}, {end - 1}");
-                this.list.Add(start, end - 1);
-                return true;
-            }
-        }
+        //    public bool Book(int start, int end)
+        //    {
+        //        //SortedDictionary<int, int> dict;
+        //        //dict.cei
+        //        // binary search
+        //        //this.set.view
+        //        //set.GetViewBetween
+        //        int li = BinarySearch(start);
+        //        //Console.WriteLine($"bs: {li}");
+        //        if (li < 0 || li >= this.list.Count)
+        //        {
+        //            //Console.WriteLine($"Adding {start}, {end - 1}");
+        //            this.list.Add(start, end - 1);
+        //            return true;
+        //        }
+        //        for (int i = li; i < this.list.Count && this.list.Keys[i] <= end; i++)
+        //        {
+        //            int sv = this.list.Keys[i];
+        //            int ev = this.list.Values[i];
+        //            //Console.WriteLine($"Comparing {start}, {end} to {sv}, {ev}");
+        //            if (sv <= end - 1 && ev >= start)
+        //            { // Overlap check
+        //                return false;
+        //            }
+        //        }
+        //        //Console.WriteLine($"Adding {start}, {end - 1}");
+        //        this.list.Add(start, end - 1);
+        //        return true;
+        //    }
+        //}
 
 
         public class MyCalendar2
