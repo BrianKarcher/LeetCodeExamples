@@ -1,3 +1,4 @@
+using LeetCodeExample.Test.Common;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,22 +29,6 @@ namespace LeetCodeExample.Test
             ans = IsValidBST(new TreeNode(5, new TreeNode(1), new TreeNode(4, new TreeNode(3), new TreeNode(6))));
             Assert.AreEqual(false, ans);
         }
-
-
-        // Definition for a binary tree node.
-        public class TreeNode
-        {
-            public int val;
-            public TreeNode left;
-            public TreeNode right;
-            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
-            {
-                this.val = val;
-                this.left = left;
-                this.right = right;
-            }
-        }
-
 
         public bool IsValidBST(TreeNode root)
         {
