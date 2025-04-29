@@ -25,6 +25,23 @@ namespace LeetCodeExample.Test
 
         public int MaxProfit(int[] prices)
         {
+            int profit = 0;
+            int buyPrice = prices[0];
+            for (int i = 1; i < prices.Length; i++)
+            {
+                // Profit to be made? Make it!
+                if (prices[i] > buyPrice)
+                {
+                    profit += prices[i] - buyPrice;
+                    buyPrice = prices[i];
+                }
+                buyPrice = Math.Min(buyPrice, prices[i]);
+            }
+            return profit;
+        }
+
+        public int MaxProfit2(int[] prices)
+        {
             int currentProfit = 0;
             bool wantToBuy = true;
 
