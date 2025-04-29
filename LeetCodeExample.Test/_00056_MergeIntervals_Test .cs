@@ -61,5 +61,26 @@ namespace LeetCodeExample.Test
 
             return mergedIntervals.ToArray();
         }
+
+        public int[][] Merge2(int[][] intervals)
+        {
+            // Sort by first column
+            var sortedIntervals = intervals.OrderBy(i => i[0]).ToArray();
+            List<int[]> mergedIntervals = new List<int[]>();
+            for (int i = 0; i < sortedIntervals.Length; i++)
+            {
+                /// If first merge, or the last "end" is less than the current "start", begin a new merge interval
+                if (!mergedIntervals.Any() || mergedIntervals.Last()[1] < sortedIntervals[i][0])
+                {
+                    mergedIntervals.Add(new int[] { sortedIntervals[i][0], sortedIntervals[i][1] });
+                }
+                else
+                {
+                    // Merge the interval into the last
+                    mergedIntervals.Last()[1] = Math.Max(mergedIntervals.Last()[1], sortedIntervals[i][1]);
+                }
+            }
+            return mergedIntervals.ToArray();
+        }
     }
 }

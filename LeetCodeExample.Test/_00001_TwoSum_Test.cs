@@ -50,5 +50,24 @@ namespace LeetCodeExample.Test
 
             return null;
         }
+
+        //public int[] TwoSum(int[] nums, int target)
+        //{
+        //    // Key = num, value = index
+        //    // Need to search by other num, not index
+        //    HashSet<int> cache = new();
+        //    for (int i = 0; i < nums.Length; i++)
+        //    {
+        //        var val = nums[i];
+        //        var otherNum = target - val;
+        //        if (cache.Contains(otherNum))
+        //        {
+        //            return new int[] { otherIndex, i };
+        //        }
+        //        kvps.TryAdd(val, i);
+        //    }
+
+        //    return null;
+        //}
     }
 }
