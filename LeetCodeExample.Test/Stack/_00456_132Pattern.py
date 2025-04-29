@@ -1,6 +1,7 @@
 # Given an array of n integers nums, a 132 pattern is a subsequence of three integers nums[i], nums[j] and nums[k] such that i < j < k and nums[i] < nums[k] < nums[j].
 
 # Return true if there is a 132 pattern in nums, otherwise, return false.
+# https://leetcode.com/problems/132-pattern/solutions/94071/single-pass-c-o-n-space-and-time-solution-8-lines-with-detailed-explanation/
 # https://leetcode.com/problems/132-pattern/solutions/4107421/99-35-stack-left-approach-binary-search/
 class Solution:
     def find132pattern(self, nums: List[int]) -> bool:
