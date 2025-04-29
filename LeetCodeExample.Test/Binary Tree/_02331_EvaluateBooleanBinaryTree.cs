@@ -35,6 +35,11 @@ public class _02331_EvaluateBooleanBinaryTree
             return node.val == 0 ? false : true;
 
         bool left = dfs(node.left);
+        // Short circuit if possible.
+        if (node.val == 2 && left)
+            return true;
+        if (node.val == 3 && !left)
+            return false;
         bool right = dfs(node.right);
         if (node.val == 2)
             return left || right;
