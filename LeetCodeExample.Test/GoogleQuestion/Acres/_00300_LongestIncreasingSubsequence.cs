@@ -14,7 +14,59 @@ namespace LeetCodeExample.Test.Google
     {
         // https://www.youtube.com/watch?v=cjWnW0hdF1Y
         // Says if the interviewer wants nlogn without a hint, walk out of the room
+
         public int LengthOfLIS(int[] nums)
+        {
+            List<int> arr = new();
+            arr.Add(nums[0]);
+            for (int i = 1; i < nums.Length; i++)
+            {
+                // arr is always kept sequential so we can perform a binary search later
+                // If the new num is higher than the last item in the array, add it since it
+                // keeps the sequential nature. This increases the count of the increasing subsequence
+                if (nums[i] > arr[arr.Count - 1])
+                {
+                    arr.Add(nums[i]);
+                }
+                else
+                {
+                    // There is an item in the array larger than this.
+                    // Find the item next higher than this item and replace it with this number.
+                    // This "brings down" the items in the list.
+                    int index = BinarySearch(arr, nums[i]);
+                    arr[index] = nums[i];
+                }
+            }
+            return arr.Count;
+        }
+
+        public int BinarySearch(List<int> nums, int target)
+        {
+            // Return the target's index or the next higher.
+            int l = 0;
+            int r = nums.Count - 1;
+            while (l <= r)
+            {
+                int mid = (l + r) / 2;
+                if (nums[mid] == target)
+                {
+                    return mid;
+                }
+                else if (target > nums[mid])
+                {
+                    // Move right
+                    l = mid + 1;
+                }
+                else
+                {
+                    // Move left.
+                    r = mid - 1;
+                }
+            }
+            return l;
+        }
+
+        public int LengthOfLIS2(int[] nums)
         {
             int[] dp = new int[nums.Length];
             Array.Fill(dp, 1);
