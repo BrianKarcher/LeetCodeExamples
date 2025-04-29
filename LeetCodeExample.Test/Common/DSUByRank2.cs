@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LeetCodeExample.Test.Union_Find2
+namespace LeetCodeExample.Test.Common.Union_Find2
 {
     public class DSU
     {
