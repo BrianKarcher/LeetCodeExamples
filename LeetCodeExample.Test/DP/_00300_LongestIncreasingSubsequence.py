@@ -16,11 +16,9 @@ class Solution:
         return len(sub)
     
 from typing import List
-import bisect
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         sub = []
-
         def search(num: int) -> int:
             l = 0
             r = len(sub) - 1
@@ -35,10 +33,13 @@ class Solution:
             return l
 
         for num in nums:
-            mid = bisect.bisect_left(sub, num)
-            if mid == len(sub):
+            if len(sub) == 0:
+                sub.append(num)
+            #print(f'{mid}')
+            elif num > sub[-1]:
                 sub.append(num)
             else:
+                mid = search(num)
                 sub[mid] = num
         return len(sub)
 
