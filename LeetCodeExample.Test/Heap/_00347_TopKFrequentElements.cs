@@ -35,5 +35,23 @@ namespace LeetCodeExample.Test
             }
             return rtn;
         }
+
+        //public int[] TopKFrequent(int[] nums, int k)
+        //{
+        //    Dictionary<int, int> map = new Dictionary<int, int>();
+        //    for (int i = 0; i < nums.Length; i++)
+        //    {
+        //        if (!map.ContainsKey(nums[i]))
+        //            map.Add(nums[i], 0);
+        //        map[nums[i]]++;
+        //    }
+        //    var orderedArray = map.OrderByDescending(i => i.Value).ToArray();
+        //    int[] rtn = new int[k];
+        //    for (int i = 0; i < k; i++)
+        //    {
+        //        rtn[i] = orderedArray[i].Key;
+        //    }
+        //    return rtn;
+        //}
     }
 }
