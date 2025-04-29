@@ -70,7 +70,8 @@ namespace LeetCodeExample.Test.Google
                         sd.Remove(buildingPoints[i].h);
                 }
 
-                // The last height is always the biggest because sorting
+                // The first height is always the biggest because sorting
+                // First() is O(logn)
                 var highestHeight = sd.First().Key;
                 if (prevHeight != highestHeight)
                 {
