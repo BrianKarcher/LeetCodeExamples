@@ -39,5 +39,44 @@ namespace LeetCodeExample.Test.Google
             }
             return r - l - 1;
         }
+
+        // Use LCS approach (S and reverse S, then find longest common substring)
+        public string LongestPalindrome2(string s)
+        {
+            int[,] dp = new int[s.Length, s.Length];
+            int size = 0;
+            string rtn = string.Empty;
+            /*char[] arr = s.ToCharArray();
+            Array.Reverse(arr);
+            string rs = new string(arr);*/
+            string rs = string.Empty;
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                rs += s[i];
+            }
+            for (int i = 0; i < s.Length; i++)
+            {
+                for (int j = 0; j < rs.Length; j++)
+                {
+                    if (s[i] == rs[j])
+                    {
+                        if (i == 0 || j == 0)
+                        {
+                            dp[i, j] = 1;
+                        }
+                        else
+                        {
+                            dp[i, j] = dp[i - 1, j - 1] + 1;
+                        }
+                        if (dp[i, j] > size)
+                        {
+                            size = dp[i, j];
+                            rtn = s.Substring(i - size + 1, size);
+                        }
+                    }
+                }
+            }
+            return rtn;
+        }
     }
 }
