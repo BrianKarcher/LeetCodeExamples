@@ -19,32 +19,18 @@ public class _01328_BreakAPalindrome
         if (palindrome.Length == 1)
             return string.Empty;
 
-        for (int i = 0; i < palindrome.Length; i++)
+        char[] palindromeArray = palindrome.ToCharArray();
+
+        for (int i = 0; i < palindrome.Length / 2; i++)
         {
             if (palindrome[i] != 'a')
             {
-                string newStr = palindrome.Substring(0, i) + 'a' + palindrome.Substring(i + 1, palindrome.Length - i - 1);
-                if (!IsPalindrome(newStr))
-                {
-                    return newStr;
-                }
+                palindromeArray[i] = 'b';
+                return new string(palindromeArray);
             }
         }
         // in case all a's.
-        return palindrome.Substring(0, palindrome.Length - 1) + 'b';
-    }
-
-    bool IsPalindrome(string s)
-    {
-        int l = 0;
-        int r = s.Length - 1;
-        while (l <= r)
-        {
-            if (s[l] != s[r])
-                return false;
-            l++;
-            r--;
-        }
-        return true;
+        palindromeArray[palindrome.Length - 1] = 'b';
+        return new string(palindromeArray);
     }
 }
