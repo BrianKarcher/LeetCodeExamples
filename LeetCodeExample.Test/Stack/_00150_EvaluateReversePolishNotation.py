@@ -11,6 +11,30 @@
 # The input represents a valid arithmetic expression in a reverse polish notation.
 # The answer and all the intermediate calculations can be represented in a 32-bit integer.
 
+# Optimal
+from typing import List
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        operations = {
+            '+': lambda a, b: a + b,
+            '-': lambda a, b: a - b,
+            '*': lambda a, b: a * b,
+            '/': lambda a, b: int(a / b)
+        }
+        stack = []
+        for token in tokens:
+            if token not in '+-/*':
+                stack.append(int(token))
+            else:
+                operation = operations[token]
+                num2 = stack.pop()
+                num1 = stack.pop()
+                stack.append(operation(num1, num2))
+        # The input tokens given guarantee that all that is left is the answer
+        # This is the last remaining item
+        return stack[0]
+
+# First try
 from typing import List
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
