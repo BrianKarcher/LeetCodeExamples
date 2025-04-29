@@ -28,10 +28,32 @@ class Node:
         self.topRight = topRight
         self.bottomLeft = bottomLeft
         self.bottomRight = bottomRight
-    
+
+# This is optimal
+from typing import List
 class Solution:
     def construct(self, grid: List[List[int]]) -> 'Node':
-        def dfs(x1: int, x2: int, y1: int, y2: int) -> Node:
+        def rec(x1: int, y1: int, length: int) -> Node:
+            if length == 1:
+                return Node(grid[y1][x1], True, None, None, None, None)
+            
+            halfLength = length // 2
+            topLeft = rec(x1, y1, halfLength)
+            topRight = rec(x1 + halfLength, y1, halfLength)
+            bottomLeft = rec(x1, y1 + halfLength, halfLength)
+            bottomRight = rec(x1 + halfLength, y1 + halfLength, halfLength)
+            # Is Leaf?
+            if topLeft.isLeaf and topRight.isLeaf and bottomLeft.isLeaf and bottomRight.isLeaf \
+                and topLeft.val == topRight.val == bottomLeft.val == bottomRight.val:
+                return Node(topLeft.val, True, None, None, None, None)
+            # Not a Leaf
+            return Node(topLeft.val, False, topLeft, topRight, bottomLeft, bottomRight)
+        return rec(0, 0, len(grid))
+    
+# The extra double for loops really slow it down
+class Solution:
+    def construct(self, grid: List[List[int]]) -> 'Node':
+        def dfs(x1, y1, length) -> Node:
             # if x1 > x2 or y1 > y2:
             #     return None
             val = grid[y1][x1]
