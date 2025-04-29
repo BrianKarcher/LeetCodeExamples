@@ -35,12 +35,12 @@ namespace LeetCodeExample.Test
         // Top-down
         public int MaxProfit(int[] prices)
         {
-            return dp(prices, 0, 0);
+            return dp(prices, 0, false, 0);
         }
 
-        public Dictionary<(int transCount, int day), int> memo = new Dictionary<(int, int), int>();
+        public Dictionary<(int transCount, bool isHolding, int day), int> memo = new Dictionary<(int, bool, int), int>();
 
-        public int dp(int[] prices, int transCount, int day)
+        public int dp(int[] prices, int transCount, bool isHolding, int day)
         {
             // base case
             if (day == prices.Length)
@@ -48,39 +48,58 @@ namespace LeetCodeExample.Test
             if (transCount == 2)
                 return 0;
 
-            if (memo.ContainsKey((transCount, day)))
-                return memo[(transCount, day)];
+            if (memo.ContainsKey((transCount, isHolding, day)))
+                return memo[(transCount, isHolding, day)];
 
-            // We have two options to do today
-            // We can buy stock, then look for a day to sell
-            // Or we can skip today
-            // We will take the maximum of both of those options
-
-            // Option 1: Buy stock today and look for a day to sell for max profit
-            // Must recurse to that day since we don't know the true profit of this decision
-            // unless we recurse to that day and it will return the max profit for THAT day
-            // and the transactions remaining
-
-            int profitIfBuy = 0;
-
-            for (int i = day + 1; i < prices.Length; i++)
+            int maxProfit = Int32.MinValue;
+            if (!isHolding)
             {
-                if (prices[i] > prices[day])
-                {
-                    // Price is higher than today, see profit from the sale
-                    // Advance to day of sale
-                    int futureProfit = dp(prices, transCount + 1, i) + (prices[i] - prices[day]);
-                    profitIfBuy = Math.Max(profitIfBuy, futureProfit);
-                }
+                // If we are not holding stock, we can choose to buy
+                int buy = dp(prices, transCount, true, day + 1) - prices[day]; // A purchase subtracts from our profit
+                // Or not to buy
+                int notBuy = dp(prices, transCount, false, day + 1);
+                maxProfit = Math.Max(buy, notBuy);
+            }
+            else
+            {
+                // If we are holding stock, what if we choose to sell?
+                int sell = dp(prices, transCount + 1, false, day + 1) + prices[day]; // A sell adds to our profit
+                // Or not sell?
+                int notSell = dp(prices, transCount, true, day + 1);
+                maxProfit = Math.Max(sell, notSell);
             }
 
-            int profitIfTodaySkipped = dp(prices, transCount, day + 1);
-
-            int maxProfit = Math.Max(profitIfBuy, profitIfTodaySkipped);
-
-            memo[(transCount, day)] = maxProfit;
+            memo[(transCount, isHolding, day)] = maxProfit;
 
             return maxProfit;
         }
+
+
+        // We have two options to do today
+        // We can buy stock, then look for a day to sell
+        // Or we can skip today
+        // We will take the maximum of both of those options
+
+        // Option 1: Buy stock today and look for a day to sell for max profit
+        // Must recurse to that day since we don't know the true profit of this decision
+        // unless we recurse to that day and it will return the max profit for THAT day
+        // and the transactions remaining
+
+        //int profitIfBuy = 0;
+
+        //for (int i = day + 1; i < prices.Length; i++)
+        //{
+        //    if (prices[i] > prices[day])
+        //    {
+        //        // Price is higher than today, see profit from the sale
+        //        // Advance to day of sale
+        //        int futureProfit = dp(prices, transCount + 1, i) + (prices[i] - prices[day]);
+        //        profitIfBuy = Math.Max(profitIfBuy, futureProfit);
+        //    }
+        //}
+
+        //int profitIfTodaySkipped = dp(prices, transCount, day + 1);
+
+        //int maxProfit = Math.Max(profitIfBuy, profitIfTodaySkipped);
     }
 }
