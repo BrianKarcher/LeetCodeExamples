@@ -4,19 +4,8 @@
 # Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
 
 # Optimal, O(1) memory:
-ADD = '+'
-SUB = '-'
-MUL = '*'
-DIV = '/'
-OPERATIONS = {ADD, SUB, MUL, DIV}
-MUL_DIV = {MUL, DIV}
 class Solution:
     def calculate(self, s: str) -> int:
-        calcs = {'+': lambda a, b: a + b,
-                 '-': lambda a, b: a - b,
-                 '*': lambda a, b: a * b,
-                 '/': lambda a, b: a // b}
-
         operand = ''
         lastNumber = 0
         result = 0
