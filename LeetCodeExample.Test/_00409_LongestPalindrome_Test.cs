@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LeetCodeExample.Test
 {
@@ -9,7 +10,7 @@ namespace LeetCodeExample.Test
     //You may assume that each input would have exactly one solution, and you may not use the same element twice.
     //You can return the answer in any order.
     /// </summary>
-    public class _00001_TwoSum_Test
+    public class _00409_LongestPalindrome_Test
     {
         [SetUp]
         public void Setup()
@@ -19,36 +20,48 @@ namespace LeetCodeExample.Test
         [Test]
         public void Test()
         {
-            var answer = TwoSum(new int[] { 2, 7, 11, 15 }, 9);
-            Assert.AreEqual(0, answer[0]);
-            Assert.AreEqual(1, answer[1]);
+            var answer = LongestPalindrome("abccccdd");
+            Assert.AreEqual(7, answer);
 
-            answer = TwoSum(new int[] { 3, 2, 4 }, 6);
-            Assert.AreEqual(1, answer[0]);
-            Assert.AreEqual(2, answer[1]);
+            answer = LongestPalindrome("a");
+            Assert.AreEqual(1, answer);
 
-            answer = TwoSum(new int[] { 3, 3 }, 6);
-            Assert.AreEqual(0, answer[0]);
-            Assert.AreEqual(1, answer[1]);
+            answer = LongestPalindrome("bb");
+            Assert.AreEqual(2, answer);
+
+            answer = LongestPalindrome("AAAAAA");
+            Assert.AreEqual(6, answer);
         }
 
-        public int[] TwoSum(int[] nums, int target)
+        public int LongestPalindrome(string s)
         {
-            // Key = num, value = index
-            // Need to search by other num, not index
-            Dictionary<int, int> kvps = new Dictionary<int, int>();
-            for (int i = 0; i < nums.Length; i++)
+            if (s.Length == 1)
+                return 1;
+
+            HashSet<int> chars = new HashSet<int>();
+            int count = 0;
+            for (int i = 0; i < s.Length; i++)
             {
-                var val = nums[i];
-                var otherNum = target - val;
-                if (kvps.TryGetValue(otherNum, out var otherIndex))
+                // A palindrome is a mirror - you need two characters, one on each side, to match up
+                if (chars.Contains(s[i]))
                 {
-                    return new int[] { otherIndex, i };
+                    count += 2;
+                    chars.Remove(s[i]);
                 }
-                kvps.TryAdd(val, i);
+                else
+                {
+                    chars.Add(s[i]);
+                }
             }
 
-            return null;
+            // A palindrome can also have one extra character in the middle. Let's see if there is an extra character
+            // to put there
+            if (chars.Any())
+            {
+                count++;
+            }
+
+            return count;
         }
     }
 }
