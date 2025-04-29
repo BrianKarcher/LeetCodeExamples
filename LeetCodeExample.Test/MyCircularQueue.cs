@@ -106,12 +106,13 @@ namespace LeetCodeExample.Test
                     return true;
                 }
 
-                int newHead = head + 1;
-                if (newHead >= arr.Length)
-                    newHead = 0;
-                    
+                //int newHead = head + 1;
+                //if (newHead >= arr.Length)
+                //    newHead = 0;
 
-                head = newHead;
+
+                //head = newHead;
+                head = (head + 1) % arr.Length;
                 return true;
             }
 
@@ -136,13 +137,15 @@ namespace LeetCodeExample.Test
 
             public bool IsFull()
             {
-                int newTail = tail;
-                // Loop the tail around so when we subtract we get the correct distance
-                if (newTail < head)
-                    newTail += arr.Length;
-                int size = newTail - head;
+                //int newTail = tail;
+                //// Loop the tail around so when we subtract we get the correct distance
+                //if (newTail < head)
+                //    newTail += arr.Length;
+                //int size = newTail - head;
 
-                return size == arr.Length - 1;
+                //return size == arr.Length - 1;
+
+                return ((tail + 1) % arr.Length) == head;
             }
         }
     }
