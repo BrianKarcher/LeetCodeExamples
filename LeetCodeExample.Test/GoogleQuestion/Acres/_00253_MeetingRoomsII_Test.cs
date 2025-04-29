@@ -6,7 +6,8 @@ using System.Linq;
 namespace LeetCodeExample.Test.Google
 {
     /// <summary>
-    // Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the minimum number of conference rooms required.
+    // Given an array of meeting time intervals intervals where intervals[i] = [starti, endi],
+    // return the minimum number of conference rooms required.
     /// </summary>
     public class _00253_MeetingRoomsII_Test
     {

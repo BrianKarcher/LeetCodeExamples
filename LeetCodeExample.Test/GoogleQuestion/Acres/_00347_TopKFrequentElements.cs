@@ -20,7 +20,8 @@ namespace LeetCodeExample.Test.Google
                     map.Add(nums[i], 0);
                 map[nums[i]]++;
             }
-            //var orderedArray = map.OrderByDescending(i => i.Value).ToArray();
+
+            // The pq is a Min Queue - the smaller counts are being put on top
             var pq = new PriorityQueue<int>(Comparer<int>.Create((i1, i2) => map[i1] - map[i2]));
             foreach (var key in map.Keys)
             {

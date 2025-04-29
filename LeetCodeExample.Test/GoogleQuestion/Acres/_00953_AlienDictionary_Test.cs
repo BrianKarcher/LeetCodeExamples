@@ -29,79 +29,6 @@ namespace LeetCodeExample.Test.Google
             Assert.AreEqual(false, answer); // The first three characters "app" match, and the second string is shorter (in size.) According to lexicographical rules "apple" > "app", because 'l' > '∅', where '∅' is defined as the blank character which is less than any other character
         }
 
-        public bool IsAlienSorted(string[] words, string order)
-        {
-            if (words.Length == 1)
-                return true;
-
-            // Quick lookup of a characters order
-            Dictionary<char, int> characterOrder = new Dictionary<char, int>();
-
-            // Build the characterOrder dictionary
-            for (int i = 0; i < order.Length; i++)
-            {
-                characterOrder.Add(order[i], i);
-            }
-
-            // Loop through each word first
-            for (int j = 0; j < words.Length - 1; j++) 
-            {
-                string thisWord = words[j];
-                string nextWord = words[j + 1];
-
-                int maxLetterLength = Math.Max(thisWord.Length, nextWord.Length);
-                // Check each word with its next word, can skip the last word since no word is after that
-                for (int i = 0; i < maxLetterLength; i++)
-                {
-                    // Short Circuit the loop if one of the words has ended
-                    // This word ends first is good, no need to check more letters
-                    if (i == thisWord.Length)
-                        break;
-                    // Next word ending first is bad, return false
-                    if (i == nextWord.Length)
-                        return false;
-
-                    int comp = LetterCompare(thisWord, nextWord, i, characterOrder);
-
-                    if (comp == 1)
-                        return false;
-
-                    // Words passed, break out of the word comp
-                    if (comp == -1)
-                        break;
-
-                    // Notice if comp is 0, we continue the letter loop since the letters at this index were equal
-                }
-            }
-
-            return true;
-        }
-
-        // Returns 0 of the letters match, -1 if first is less than second, 1 if first is greater than second
-        public int LetterCompare(string word1, string word2, int index, Dictionary<char, int> characterOrder)
-        {
-            int word1Index = GetIndex(word1, index, characterOrder);
-            int word2Index = GetIndex(word2, index, characterOrder);
-            if (word1Index == word2Index)
-                return 0;
-            if (word1Index < word2Index)
-                return -1;
-            return 1;
-        }
-
-        public int GetIndex(string word, int index, Dictionary<char, int> characterOrder)
-        {
-            // If word has ended, it is considered "first" in the order sequence
-            if (index >= word.Length)
-                return -1;
-
-            return characterOrder[word[index]];
-        }
-
-
-
-
-
         // Online
         public bool IsAlienSorted2(string[] words, string order)
         {
@@ -135,5 +62,81 @@ namespace LeetCodeExample.Test.Google
 
             return true;
         }
+
+
+        //public bool IsAlienSorted(string[] words, string order)
+        //{
+        //    if (words.Length == 1)
+        //        return true;
+
+        //    // Quick lookup of a characters order
+        //    Dictionary<char, int> characterOrder = new Dictionary<char, int>();
+
+        //    // Build the characterOrder dictionary
+        //    for (int i = 0; i < order.Length; i++)
+        //    {
+        //        characterOrder.Add(order[i], i);
+        //    }
+
+        //    // Loop through each word first
+        //    for (int j = 0; j < words.Length - 1; j++) 
+        //    {
+        //        string thisWord = words[j];
+        //        string nextWord = words[j + 1];
+
+        //        int maxLetterLength = Math.Max(thisWord.Length, nextWord.Length);
+        //        // Check each word with its next word, can skip the last word since no word is after that
+        //        for (int i = 0; i < maxLetterLength; i++)
+        //        {
+        //            // Short Circuit the loop if one of the words has ended
+        //            // This word ends first is good, no need to check more letters
+        //            if (i == thisWord.Length)
+        //                break;
+        //            // Next word ending first is bad, return false
+        //            if (i == nextWord.Length)
+        //                return false;
+
+        //            int comp = LetterCompare(thisWord, nextWord, i, characterOrder);
+
+        //            if (comp == 1)
+        //                return false;
+
+        //            // Words passed, break out of the word comp
+        //            if (comp == -1)
+        //                break;
+
+        //            // Notice if comp is 0, we continue the letter loop since the letters at this index were equal
+        //        }
+        //    }
+
+        //    return true;
+        //}
+
+        //// Returns 0 of the letters match, -1 if first is less than second, 1 if first is greater than second
+        //public int LetterCompare(string word1, string word2, int index, Dictionary<char, int> characterOrder)
+        //{
+        //    int word1Index = GetIndex(word1, index, characterOrder);
+        //    int word2Index = GetIndex(word2, index, characterOrder);
+        //    if (word1Index == word2Index)
+        //        return 0;
+        //    if (word1Index < word2Index)
+        //        return -1;
+        //    return 1;
+        //}
+
+        //public int GetIndex(string word, int index, Dictionary<char, int> characterOrder)
+        //{
+        //    // If word has ended, it is considered "first" in the order sequence
+        //    if (index >= word.Length)
+        //        return -1;
+
+        //    return characterOrder[word[index]];
+        //}
+
+
+
+
+
+
     }
 }
