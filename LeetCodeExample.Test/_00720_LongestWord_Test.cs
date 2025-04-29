@@ -30,51 +30,9 @@ namespace LeetCodeExample.Test
             Assert.AreEqual("otif", answer);
         }
 
-        //public string LongestWord(string[] words)
-        //{
-        //    var sortedWords = words.OrderBy(s => s).ToList();
-        //    string longestWord = string.Empty;
-        //    HashSet<string> acceptedWords = new HashSet<string>();
-        //    for (int i = 0; i < sortedWords.Count(); i++)
-        //    {
-        //        var word = sortedWords[i];
-
-        //        if (word.Length > 1)
-        //        {
-        //            var wordMinusOne = word.Substring(0, word.Length - 1);
-
-        //            // Don't accept the word if it can't be "built"
-        //            if (!acceptedWords.Contains(wordMinusOne))
-        //                continue;
-        //        }
-
-        //        if (word.Length > longestWord.Length)
-        //        {
-        //            longestWord = word;
-        //        }
-
-        //        acceptedWords.Add(word);
-        //    }
-        //    return longestWord;
-        //}
-
         public string LongestWord(string[] words)
         {
-            // count : list of words in that count
-            Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
-            for (int i = 0; i < words.Length; i++)
-            {
-                var word = words[i];
-                if (!dict.TryGetValue(word.Length, out var lst))
-                {
-                    List<string> newList = new List<string>();
-                    lst = newList;
-                    dict.Add(word.Length, lst);
-                }
-                lst.Add(word);
-            }
-
-            //var sortedWords = words.OrderBy(s => s).ToList();
+            var sortedWords = words.OrderBy(s => s).ToList();
             string longestWord = string.Empty;
             HashSet<string> acceptedWords = new HashSet<string>();
             for (int i = 0; i < sortedWords.Count(); i++)
@@ -99,5 +57,47 @@ namespace LeetCodeExample.Test
             }
             return longestWord;
         }
+
+        //public string LongestWord(string[] words)
+        //{
+        //    // count : list of words in that count
+        //    Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
+        //    for (int i = 0; i < words.Length; i++)
+        //    {
+        //        var word = words[i];
+        //        if (!dict.TryGetValue(word.Length, out var lst))
+        //        {
+        //            List<string> newList = new List<string>();
+        //            lst = newList;
+        //            dict.Add(word.Length, lst);
+        //        }
+        //        lst.Add(word);
+        //    }
+
+        //    //var sortedWords = words.OrderBy(s => s).ToList();
+        //    string longestWord = string.Empty;
+        //    HashSet<string> acceptedWords = new HashSet<string>();
+        //    for (int i = 0; i < sortedWords.Count(); i++)
+        //    {
+        //        var word = sortedWords[i];
+
+        //        if (word.Length > 1)
+        //        {
+        //            var wordMinusOne = word.Substring(0, word.Length - 1);
+
+        //            // Don't accept the word if it can't be "built"
+        //            if (!acceptedWords.Contains(wordMinusOne))
+        //                continue;
+        //        }
+
+        //        if (word.Length > longestWord.Length)
+        //        {
+        //            longestWord = word;
+        //        }
+
+        //        acceptedWords.Add(word);
+        //    }
+        //    return longestWord;
+        //}
     }
 }
