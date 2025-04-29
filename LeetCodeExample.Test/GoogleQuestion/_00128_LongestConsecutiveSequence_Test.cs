@@ -52,29 +52,29 @@ namespace LeetCodeExample.Test.Google
             return longestStreak;
         }
 
-        public int LongestConsecutive2(int[] nums)
-        {
-            if (nums.Length == 0)
-                return 0;
+        //public int LongestConsecutive2(int[] nums)
+        //{
+        //    if (nums.Length == 0)
+        //        return 0;
 
-            var orderedNums = nums.OrderBy(i => i).ToList();
+        //    var orderedNums = nums.OrderBy(i => i).ToList();
 
-            int maxConsec = 1;
-            int currentConsec = 1;
-            for (int i = 1; i < orderedNums.Count; i++)
-            {
-                // Just skip if the same number
-                if (orderedNums[i - 1] == orderedNums[i])
-                    continue;
-                if (orderedNums[i - 1] == orderedNums[i] - 1)
-                {
-                    currentConsec++;
-                    maxConsec = Math.Max(maxConsec, currentConsec);
-                }
-                else
-                    currentConsec = 1;
-            }
-            return maxConsec;
-        }
+        //    int maxConsec = 1;
+        //    int currentConsec = 1;
+        //    for (int i = 1; i < orderedNums.Count; i++)
+        //    {
+        //        // Just skip if the same number
+        //        if (orderedNums[i - 1] == orderedNums[i])
+        //            continue;
+        //        if (orderedNums[i - 1] == orderedNums[i] - 1)
+        //        {
+        //            currentConsec++;
+        //            maxConsec = Math.Max(maxConsec, currentConsec);
+        //        }
+        //        else
+        //            currentConsec = 1;
+        //    }
+        //    return maxConsec;
+        //}
     }
 }
