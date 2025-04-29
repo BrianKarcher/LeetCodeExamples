@@ -44,9 +44,9 @@ namespace LeetCodeExample.Test
             return currentMaxProfit;
         }
 
-        public int MaxProfitIterate(int[] prices, int index)
-        {
+        //public int MaxProfitIterate(int[] prices, int index)
+        //{
 
-        }
+        //}
     }
 }
