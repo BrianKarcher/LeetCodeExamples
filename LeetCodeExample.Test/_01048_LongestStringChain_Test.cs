@@ -40,7 +40,11 @@ namespace LeetCodeExample.Test
             int maxCount = 0;
             for (int i = 0; i < words.Length; i++)
             {
-                int count = Recurse(words, null, i);
+                if (words[i] == "xb")
+                {
+                    int k = 0;
+                }
+                int count = Recurse(words, i);
                 maxCount = Math.Max(maxCount, count);
             }
 
@@ -51,15 +55,8 @@ namespace LeetCodeExample.Test
         Dictionary<int, int> map = new Dictionary<int, int>();
 
         // Use Dynamic Programming. On each Recurse step, find the max chain of words that can be created from it.
-        public int Recurse(string[] words, string previousString, int i)
+        public int Recurse(string[] words, int i)
         {
-            // Base case
-            if (previousString != null)
-            {
-                if (!IsValidNextWord(previousString, words[i]))
-                    return 0;
-            }
-
             if (map.ContainsKey(i))
                 return map[i];
 
@@ -71,8 +68,10 @@ namespace LeetCodeExample.Test
                 // Don't check a word against itself
                 if (k == i)
                     continue;
-                int newMax = Recurse(words, words[i], k);
-                maxChain = Math.Max(maxChain, newMax);
+                if (!IsValidNextWord(words[i], words[k]))
+                    continue;
+                int count = Recurse(words, k);
+                maxChain = Math.Max(maxChain, count);
             }
             maxChain += thisOne;
 
