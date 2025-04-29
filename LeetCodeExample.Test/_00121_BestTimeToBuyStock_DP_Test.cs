@@ -25,6 +25,23 @@ namespace LeetCodeExample.Test
 
         public int MaxProfit(int[] prices)
         {
+            int lowestPriceYet = prices[0];
+            // We can only do one single transaction in total and 
+            // buy must happen before the sale.
+            // So just keep track of the lowest price yet seen and take the difference
+            // between that and that days price to find the profit.
+            // Max profit wins
+            int max = 0;
+            for (int i = 1; i < prices.Length; i++)
+            {
+                max = Math.Max(max, prices[i] - lowestPriceYet);
+                lowestPriceYet = Math.Min(lowestPriceYet, prices[i]);
+            }
+            return max;
+        }
+
+        public int MaxProfit2(int[] prices)
+        {
             int currentMaxProfit = 0;
 
             int currentHighPrice = prices[prices.Length - 1];
