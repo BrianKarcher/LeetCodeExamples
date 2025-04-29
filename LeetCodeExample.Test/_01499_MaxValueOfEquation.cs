@@ -17,7 +17,7 @@ namespace LeetCodeExample.Test
     {
         public int FindMaxValueOfEquation(int[][] points, int k)
         {
-            PriorityQueue<(int dist, int i)> pq = new PriorityQueue<(int dist, int i)>((i1, i2) => i1.dist > i2.dist ? 1 : -1);
+            PriorityQueue<(int dist, int i)> pq = new PriorityQueue<(int dist, int i)>(Comparer<(int dist, int i)>.Create((i1, i2) => i1.dist > i2.dist ? 1 : -1));
 
             int max = Int32.MinValue;
             foreach (var point in points)

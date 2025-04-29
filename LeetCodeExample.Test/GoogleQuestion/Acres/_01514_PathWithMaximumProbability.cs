@@ -79,7 +79,7 @@ namespace LeetCodeExample.Test.Google
             // Never revisit a node
             double[] visited = new double[n];
             // We will always follow the highest probabilty chain since probabilities will never go up (they are only 0 to 1)
-            PriorityQueue<(int node, double probability)> pq = new PriorityQueue<(int node, double probability)>((i1, i2) => i1.probability > i2.probability ? -1 : 1);
+            PriorityQueue<(int node, double probability)> pq = new PriorityQueue<(int node, double probability)>(Comparer<(int node, double probability)>.Create((i1, i2) => i1.probability > i2.probability ? -1 : 1));
 
             pq.Enqueue((start, 1));
             visited[start] = 1;

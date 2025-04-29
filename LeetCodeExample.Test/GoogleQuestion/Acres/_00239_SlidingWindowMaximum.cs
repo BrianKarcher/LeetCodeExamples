@@ -50,12 +50,12 @@ namespace LeetCodeExample.Test.Google
             //                                                   return 1;
             //                                                });
 
-            PriorityQueue<(int index, int val)> pq = new PriorityQueue<(int index, int val)>((i1, i2) =>
+            PriorityQueue<(int index, int val)> pq = new PriorityQueue<(int index, int val)>(Comparer<(int index, int val)>.Create((i1, i2) =>
             {
                 if (i1.val > i2.val) return -1;
                 else if (i1.val == i2.val) return 0;
                 return 1;
-            });
+            }));
 
             // Kickstart the pq
             for (int i = 0; i < k; i++)

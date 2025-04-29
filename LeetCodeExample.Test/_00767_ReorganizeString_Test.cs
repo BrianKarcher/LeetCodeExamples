@@ -48,14 +48,14 @@ namespace LeetCodeExample.Test
 
             //var lst = dec.OrderByDescending(i => i.Value).ToList();
 
-            PriorityQueue<(char Key, int Value)> pq = new PriorityQueue<(char Key, int Value)>((a, b) =>
+            PriorityQueue<(char Key, int Value)> pq = new PriorityQueue<(char Key, int Value)>(Comparer<(char Key, int Value)>.Create((a, b) =>
             {
                 if (b.Value > a.Value)
                     return 1;
                 else if (a.Value > b.Value)
                     return -1;
                 return 0;
-            });
+            }));
 
             //PriorityQueue<KeyVal<char, int>> pq = new PriorityQueue<KeyVal<char, int>>((a, b) =>
             //{

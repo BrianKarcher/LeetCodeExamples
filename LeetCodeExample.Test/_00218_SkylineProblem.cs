@@ -108,14 +108,14 @@ namespace LeetCodeExample.Test
             // Thinking about starting with the tallest structure first. It might make 
             // calculations easier and reduces edge cases
 
-            PriorityQueue<(int l, int r, int h)> pq = new PriorityQueue<(int l, int r, int h)>((i1, i2) =>
+            PriorityQueue<(int l, int r, int h)> pq = new PriorityQueue<(int l, int r, int h)>(Comparer<(int l, int r, int h)>.Create((i1, i2) =>
             {
                 if (i1.h == i2.h)
                     return 0;
                 if (i1.h > i2.h)
                     return -1;
                 return 1;
-            });
+            }));
 
             // Go left to right. The buildings are already sorted by "left".
             // Find clustered (overlapping) buildings and place them in a PriorityQueue
