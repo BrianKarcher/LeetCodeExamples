@@ -17,6 +17,9 @@ namespace LeetCodeExample.Test
 
     //string convert(string s, int numRows);
     /// </summary>
+    /// 
+
+    // Looking back, WTF was I thinking?
     public class _00006_ZigzagConversion
     {
         public string Convert(string s, int numRows)
