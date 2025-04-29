@@ -12,6 +12,25 @@ namespace LeetCodeExample.Test
     /// </summary>
     public class _00120_Triangle
     {
+        public int MinimumTotal2(IList<IList<int>> triangle)
+        {
+            int[,] dp = new int[triangle.Count, triangle.Count];
+            // Base case is the last row
+            for (int i = 0; i < triangle.Count; i++)
+            {
+                dp[triangle.Count - 1, i] = triangle[triangle.Count - 1][i];
+            }
+            for (int r = triangle.Count - 2; r >= 0; r--)
+            {
+                for (int c = 0; c <= r; c++)
+                {
+                    dp[r, c] = Math.Min(dp[r + 1, c], dp[r + 1, c + 1]) + triangle[r][c];
+                }
+            }
+            return dp[0, 0];
+        }
+
+
         public int MinimumTotal(IList<IList<int>> triangle)
         {
             return dp(triangle, 0, 0);
