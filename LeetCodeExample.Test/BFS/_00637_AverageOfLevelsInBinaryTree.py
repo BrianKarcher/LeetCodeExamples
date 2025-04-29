@@ -11,17 +11,15 @@ class Solution:
         queue = deque()
         avg = []
         queue.append(root)
-        while len(queue) > 0:
+        while queue:
             total = 0
             count = len(queue)
             for i in range(count):
                 node = queue.popleft()
-                #print(f"adding {node.val}")
                 total += node.val
-                if node.left != None:
+                if node.left:
                     queue.append(node.left)
-                if node.right != None:
+                if node.right:
                     queue.append(node.right)
-            #print(f"{total}/{count}")
-            avg.append(float(total) / float(count))
+            avg.append(total / count)
         return avg
