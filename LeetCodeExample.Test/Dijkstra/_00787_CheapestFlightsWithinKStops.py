@@ -4,24 +4,18 @@
 # This question is interesting because there are two weights. Price and # of hops. The optimal path may be to enter a city with a higher price but lower hops
 # If that hop count is what is needed to reach the destination.
 
-# My failed attempt using heaps
-
 import heapq
 from typing import List
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
-        adjList = {}
+        adjList = {dst : [] for dst in range(n)}
         for (fromLoc, toLoc, price) in flights:
-            if fromLoc not in adjList:
-                adjList[fromLoc] = []
             adjList[fromLoc].append((toLoc, price))
         # print(adjList)
         # k += 1 # Add the destination stop
-        heap = []
-        cities = {}
-        for i in range(n):
-            cities[i] = (float('inf'), float('inf')) # price, hops
+        cities = {item : (float('inf'), float('inf')) for item in range(n)} # price, hops
         cities[src] = (0, 0)
+        heap = []
         heapq.heappush(heap, (0, src, 0))
         #count = 0
         while heap: # and heap[0][0] < cities[dst][0]:
