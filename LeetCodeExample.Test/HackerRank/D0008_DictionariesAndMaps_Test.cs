@@ -19,12 +19,12 @@ namespace LeetCodeExample.Test
         [Test]
         public void Test()
         {
-            Main(new string[] { "3", "sam 99912222", "tom 11122222", "harry 12299933", "sam", "edward", "harry" });
+            //Main(new string[] { "3", "sam 99912222", "tom 11122222", "harry 12299933", "sam", "edward", "harry" });
             //Assert.AreEqual(0, answer[0]);
             
         }
 
-        void Main(String[] args)
+        void Main2(String[] args)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
