@@ -5,6 +5,46 @@
 # You must find a solution with a memory complexity better than O(n2).
 
 from typing import List
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        def bs() -> int:
+            n = len(matrix)
+            if n == 1 or k == 1:
+                return matrix[0][0]
+            # r starts as the largest value in the matrix, as defined by the problem
+            l, r = matrix[0][0], matrix[n - 1][n - 1]
+            # We do a binary search on VALUE, not indexes
+            mid = 0
+            while l <= r:
+                count = 0
+                dups = 0
+                mid = int(l + (r - l) / 2)
+                for row in range(n):
+                    for col in range(n):
+                        if matrix[row][col] <= mid:
+                            count += 1
+                            if matrix[row][col] == mid:
+                                dups += 1
+                #print(f'{l}, {r}, {mid}, count = {count}, dups = {dups}')
+                if k >= count - max(0, dups - 1) and k <= count:
+                    # mid may not be in the matrix, so
+                    # find number closest to mid, but not bigger than mid
+                    #print(f'found, mid = {mid}')
+                    break
+                elif count > k:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            rtn = matrix[0][0]
+            for row in range(n):
+                for col in range(n):
+                    if matrix[row][col] <= mid:
+                        rtn = max(rtn, matrix[row][col])
+            return rtn
+        return bs()
+    
+
+from typing import List
 import heapq
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
