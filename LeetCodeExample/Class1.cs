@@ -8,6 +8,17 @@ namespace LeetCodeExample
     {
         static void Main(String[] args)
         {
+            int num = 3;
+
+            var res = num switch
+            {
+                >= 4 => "It's >= four",
+                3 => "It's three",
+                0 => "It's zero",
+                < 0 => "It's negative",
+                _ => "It's something else"
+            };
+
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
             /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
