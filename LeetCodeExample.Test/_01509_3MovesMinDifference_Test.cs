@@ -92,8 +92,17 @@ namespace LeetCodeExample.Test
         }
 
 
-        private const int reducedSize = 4;
 
+
+        /// <summary>
+        /// //////////////////////////////
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+
+
+
+        private const int reducedSize = 4;
         // Uses a Greedy Sort, O(n)
         public int MinDifference_Online(int[] nums)
         {
@@ -133,6 +142,7 @@ namespace LeetCodeExample.Test
         {
             int result = maxs[0] - mins[0];
 
+            // Sliding Window
             for (int i = 0; i < reducedSize; ++i)
             {
                 result = Math.Min(result, maxs[i] - mins[reducedSize - 1 - i]);
