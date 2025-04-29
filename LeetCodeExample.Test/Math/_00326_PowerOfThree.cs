@@ -6,9 +6,8 @@ using System.Linq;
 namespace LeetCodeExample.Test
 {
     /// <summary>
-    //Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
-    //You may assume that each input would have exactly one solution, and you may not use the same element twice.
-    //You can return the answer in any order.
+    //  Given an integer n, return true if it is a power of three.Otherwise, return false.
+    //  An integer n is a power of three, if there exists an integer x such that n == 3x.
     /// </summary>
     public class _00326_PowerOfThree
     {
@@ -18,9 +17,9 @@ namespace LeetCodeExample.Test
                 return false;
             if (n == 1)
                 return true;
-            
+
             double num = Math.Log(n, 3);
-            return num == Math.Floor(num);
+            return Math.Abs(num - Math.Round(num)) < float.Epsilon / float.Epsilon;
         }
     }
 }
