@@ -9,7 +9,7 @@ namespace LeetCodeExample.Test
     //Return the indices of the two numbers (1-indexed) as an integer array answer of size 2, where 1 <= answer[0] < answer[1] <= numbers.length.
     //The tests are generated such that there is exactly one solution.You may not use the same element twice.
     /// </summary>
-    public class _00167_TwoSumII_Test
+    public class _00167_TwoSumII2_Test
     {
         [SetUp]
         public void Setup()
