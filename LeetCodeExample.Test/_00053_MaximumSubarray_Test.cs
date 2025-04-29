@@ -31,8 +31,23 @@ namespace LeetCodeExample.Test
             Assert.AreEqual(3, answer);
         }
 
-        // O(n) approach
         public int MaxSubArray(int[] nums)
+        {
+            int currentSub = Int32.MinValue;
+            int runningMax = 0;
+            foreach (var num in nums)
+            {
+                runningMax += num;
+                currentSub = Math.Max(currentSub, runningMax);
+                // If it's less than zero then start the counting again
+                if (runningMax < 0)
+                    runningMax = 0;
+            }
+            return currentSub;
+        }
+
+        // O(n) approach
+        public int MaxSubArray2(int[] nums)
         {
             if (nums.Length == 1)
                 return nums[0];
@@ -53,6 +68,8 @@ namespace LeetCodeExample.Test
             }
             return max;
         }
+
+
 
         // Searching for a Divide and Conquer approach
         // Interesting solution, D&C, but it's O(n * logn)
