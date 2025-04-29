@@ -96,7 +96,7 @@ namespace LeetCodeExample.Test.UnionFind2
         }
 
         // Driver Code
-        static public void Main(String[] args)
+        static public void Main3(String[] args)
         {
             /* Let us create the following graph
                 0

@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace LeetCodeExample.Test
+namespace LeetCodeExample.Test.Google
 {
     /// <summary>
     //    You are given a string sentence that consist of words separated by spaces.Each word consists of lowercase and uppercase letters only.

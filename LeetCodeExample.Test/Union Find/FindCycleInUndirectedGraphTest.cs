@@ -90,7 +90,7 @@ namespace LeetCodeExample.Test
         }
 
         // Driver code
-        public static void Main(String[] args)
+        public static void Main2(String[] args)
         {
             /* Let us create the following graph
                   0
