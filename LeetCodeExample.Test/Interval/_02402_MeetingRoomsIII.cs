@@ -27,17 +27,16 @@ public class _02402_MeetingRoomsIII
     // NEED to sort by end time, THEN by the room number!!! Since the lowest room # gets picked first. (otherwise it fails in unit test 80)
     PriorityQueue<(long time, int num), (long, int)> roomsInUse;
     int[] roomCounter;
-    int maxRooms;
 
     public int MostBooked(int n, int[][] meetings)
     {
-        maxRooms = n;
         availableRooms = new PriorityQueue<int, int>();
         availableRooms.EnqueueRange(Enumerable.Range(0, n).Select(i => (i, i)));
         roomsInUse = new PriorityQueue<(long, int), (long, int)>();
         roomCounter = new int[n];
         // Sort meetings by start time.
-        meetings = meetings.OrderBy(i => i[0]).ToArray();
+        //Array.Sort(meetings, (x, y) => x[0] - y[0]);
+        Array.Sort(meetings, (x, y) => x[0].CompareTo(y[0]));
         //int currentTime = 0;
         for (int i = 0; i < meetings.Length; i++)
         {
