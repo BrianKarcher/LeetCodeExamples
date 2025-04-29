@@ -24,6 +24,66 @@ namespace LeetCodeExample.Test
     {
         public IList<IList<int>> GetSkyline(int[][] buildings)
         {
+            List<(int x, int h, bool isStart)> buildingPoints = new List<(int x, int h, bool isStart)>();
+
+            // Fill in the building points
+            for (int i = 0; i < buildings.Length; i++)
+            {
+                // Add building starting point
+                buildingPoints.Add((buildings[i][0], buildings[i][2], true));
+                // Add building ending point
+                buildingPoints.Add((buildings[i][1], buildings[i][2], false));
+            }
+
+            buildingPoints.Sort(Comparer<(int x, int h, bool isStart)>.Create((i1, i2) => {
+                if (i1.x != i2.x)
+                    return i1.x.CompareTo(i2.x);
+                else
+                    return (i1.isStart ? -i1.h : i1.h) - (i2.isStart ? -i2.h : i2.h);
+            }));
+
+            // height : count of buildings at that height
+            // I am not using a Heap because heaps have slow, or no, Remove operations for items not at the top of the Heap
+            SortedDictionary<int, int> sd = new SortedDictionary<int, int>(Comparer<int>.Create((i1, i2) => {
+                return i2.CompareTo(i1);
+            }));
+            // Removes edge cases and extra if statements
+            sd.Add(0, 1);
+            IList<IList<int>> rtn = new List<IList<int>>();
+
+            int prevHeight = 0;
+            for (int i = 0; i < buildingPoints.Count; i++)
+            {
+                if (buildingPoints[i].isStart)
+                {
+                    // Start of new building, let's add it to the dictionary
+                    if (!sd.ContainsKey(buildingPoints[i].h))
+                        sd.Add(buildingPoints[i].h, 0);
+                    sd[buildingPoints[i].h]++;
+                }
+                else
+                {
+                    if (!sd.ContainsKey(buildingPoints[i].h))
+                        sd.Add(buildingPoints[i].h, 0);
+                    sd[buildingPoints[i].h]--;
+                    if (sd[buildingPoints[i].h] == 0)
+                        sd.Remove(buildingPoints[i].h);
+                }
+
+                // The last height is always the biggest because sorting
+                var highestHeight = sd.First().Key;
+                if (prevHeight != highestHeight)
+                {
+                    rtn.Add(new List<int>() { buildingPoints[i].x, highestHeight });
+                    prevHeight = highestHeight;
+                }
+            }
+            return rtn;
+        }
+
+
+        public IList<IList<int>> GetSkyline2(int[][] buildings)
+        {
             // Sort of an advanced Merge Intervals problem
             // The horizontal lines at the top of the buildings being the intervals
             // Main differences are the differing heights, and what to do on an overlap
