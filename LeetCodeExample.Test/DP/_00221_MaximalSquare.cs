@@ -27,11 +27,11 @@ namespace LeetCodeExample.Test
                         int min = Math.Min(u, Math.Min(l, ul));
                         int size = min + 1;
                         dp[r, c] = size;
-                        maxArea = Math.Max(maxArea, size * size);
+                        maxArea = Math.Max(maxArea, size);
                     }
                 }
             }
-            return maxArea;
+            return maxArea * maxArea;
         }
 
         //public int MaximalSquare(char[][] matrix)
