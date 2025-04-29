@@ -11,7 +11,7 @@ class Solution:
         ans = []
         intervals.sort()
         # print(f'{intervals}')
-        current = intervals[0]
+        current = intervals[0] # We only need to sort by START. END is not necessary since it will overlap if the START is the same.
         for i in range(1, len(intervals)):
             interval = intervals[i]
             if current[END] < interval[START]:
