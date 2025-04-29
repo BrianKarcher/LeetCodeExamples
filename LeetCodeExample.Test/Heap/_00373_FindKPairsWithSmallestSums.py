@@ -4,6 +4,28 @@
 
 # Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sum
 
+import heapq
+from typing import List
+class Solution:
+    def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+        heap = []
+        ans = []
+        heapq.heappush(heap, (nums1[0] + nums2[0], 0, 0))
+        visited = set()
+        visited.add((0,0))
+        for i in range(k):
+            [_, i1, i2] = heapq.heappop(heap)
+            ans.append([nums1[i1], nums2[i2]])
+            if i1 < len(nums1) - 1 and (i1 + 1, i2) not in visited:
+                heapq.heappush(heap, ((nums1[i1 + 1] + nums2[i2], i1 + 1, i2)))
+                visited.add((i1 + 1, i2))
+            if i2 < len(nums2) - 1 and (i1, i2 + 1) not in visited:
+                heapq.heappush(heap, ((nums1[i1] + nums2[i2 + 1], i1, i2 + 1)))
+                visited.add((i1, i2 + 1))
+        return ans
+    
+###############################
+
 from typing import List
 #from collections import heapq
 class Solution:
