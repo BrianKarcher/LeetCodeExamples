@@ -8,6 +8,23 @@ class TreeNode:
         self.right = right
 from typing import Optional
 from typing import List
+
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+        def rightSide(node, level):
+            if node == None:
+                return
+            # First time seeing this level? Add it.
+            if level == len(ans):
+                ans.append(node.val)
+            rightSide(node.right, level + 1)
+            rightSide(node.left, level + 1)
+        
+        rightSide(root, 0)
+        return ans
+    
+
 from collections import deque
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
