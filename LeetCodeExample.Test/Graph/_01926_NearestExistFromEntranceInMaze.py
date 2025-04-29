@@ -11,6 +11,7 @@ class Solution:
     def nearestExit(self, maze: List[List[str]], entrance: List[int]) -> int:
         visited = set()
         q = deque()
+        # We store distance with the item to avoid extra complexity about creating an extra loop for each "level". Makes code more readable.
         q.append((entrance[0], entrance[1], 0))
         visited.add((entrance[0], entrance[1]))
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
