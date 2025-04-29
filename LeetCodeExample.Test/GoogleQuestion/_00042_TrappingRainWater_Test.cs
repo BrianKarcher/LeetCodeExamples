@@ -8,7 +8,7 @@ namespace LeetCodeExample.Test
     // Given n non-negative integers representing an elevation map where the width of each bar is 1,
     // compute how much water it can trap after raining.
     /// </summary>
-    public class _00042_TrappingRainWater_Test
+    public class G_00042_TrappingRainWater_Test
     {
         [SetUp]
         public void Setup()
