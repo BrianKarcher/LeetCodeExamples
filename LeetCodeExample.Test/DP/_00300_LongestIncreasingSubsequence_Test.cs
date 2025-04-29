@@ -27,6 +27,51 @@ namespace LeetCodeExample.Test
             var ans = LongestIncreasingSubsequence(array, n);
         }
 
+        public int LengthOfLIS(int[] nums)
+        {
+            var tails = new List<int>();
+            foreach (int num in nums)
+            {
+                int pos = binarySearch(tails, num);
+                if (pos == -1)
+                {
+                    tails.Add(num);
+                }
+                else
+                {
+                    tails[pos] = num;
+                }
+            }
+            return tails.Count;
+        }
+
+        private int binarySearch(List<int> tails, int num)
+        {
+            if (tails.Count == 0)
+            {
+                return -1;
+            }
+            int lo = 0, hi = tails.Count - 1;
+            while (lo + 1 < hi)
+            {
+                int mid = (lo + hi) / 2;
+                if (tails[mid] >= num)
+                {
+                    hi = mid;
+                }
+                else
+                {
+                    lo = mid;
+                }
+            }
+
+            if (tails[lo] < num && tails[hi] < num)
+            {
+                return -1;
+            }
+            return tails[lo] >= num ? lo : hi;
+        }
+
         // Big O (worst case): O(n^2)
         // Space: O(n)
         // Big Omega (best possible time): O(n^2)
