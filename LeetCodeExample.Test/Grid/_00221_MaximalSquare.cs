@@ -12,27 +12,20 @@ namespace LeetCodeExample.Test
     {
         public int MaximalSquare(char[][] matrix)
         {
-            int[,] dp = new int[matrix.Length, matrix[0].Length];
+            int[,] dp = new int[matrix.Length + 1, matrix[0].Length + 1];
 
             int maxArea = 0;
-            for (int r = 0; r < matrix.Length; r++)
+            for (int r = 1; r <= matrix.Length; r++)
             {
-                for (int c = 0; c < matrix[0].Length; c++)
+                for (int c = 1; c <= matrix[0].Length; c++)
                 {
-                    if (matrix[r][c] == '1')
+                    if (matrix[r - 1][c - 1] == '1')
                     {
-                        int size = 0;
-                        if (r == 0 || c == 0)
-                            size = 1;
-                        else
-                        {
-                            int u = dp[r - 1, c];
-                            int l = dp[r, c - 1];
-                            int ul = dp[r - 1, c - 1];
-                            int min = Math.Min(u, l);
-                            min = Math.Min(min, ul);
-                            size = min + 1;
-                        }
+                        int u = dp[r - 1, c];
+                        int l = dp[r, c - 1];
+                        int ul = dp[r - 1, c - 1];
+                        int min = Math.Min(u, Math.Min(l, ul));
+                        int size = min + 1;
                         dp[r, c] = size;
                         maxArea = Math.Max(maxArea, size * size);
                     }
