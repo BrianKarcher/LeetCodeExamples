@@ -14,22 +14,13 @@ namespace LeetCodeExample.Test
     {
         public bool IsPowerOfThree(int n)
         {
-            if (n <= 0)
+            if (n == 0)
                 return false;
-            if (n == 1) // 3 to the power of 0
+            if (n == 1)
                 return true;
-            int m = 3;
-            while (m <= n)
-            {
-                if (m == n)
-                    return true;
-                int newM = m * 3;
-                // Check for out of bounds
-                if (newM < m)
-                    return false;
-                m = newM;
-            }
-            return false;
+            
+            double num = Math.Log(n, 3);
+            return num == Math.Floor(num);
         }
     }
 }
