@@ -26,7 +26,9 @@ namespace LeetCodeExample.Test
             return dp(s1, s2, s3, 0, 0, 0);
         }
 
-        Dictionary<(int i1, int i2, int i3), bool> map = new Dictionary<(int, int, int), bool>();
+        /*public dp(string s1, string s2, string s3, int i1, int i2, int i3) {
+            if (i1 < s1.Length && 
+        }*/
 
         public bool dp(string s1, string s2, string s3, int i1, int i2, int i3)
         {
@@ -36,26 +38,21 @@ namespace LeetCodeExample.Test
             {
                 return true;
             }
-
-            if (map.ContainsKey((i1, i2, i3)))
-                return map[(i1, i2, i3)];
-
             char c1 = i1 >= s1.Length ? ' ' : s1[i1];
             char c2 = i2 >= s2.Length ? ' ' : s2[i2];
             char c3 = s3[i3];
             //Console.WriteLine($"{c1} {c2} {c3}");
-            bool res = false;
             if (c1 == c3 && c2 != c3)
             {
                 //Console.WriteLine("Taking 1");
                 // First character match, only increment that one
-                res = dp(s1, s2, s3, i1 + 1, i2, i3 + 1);
+                return dp(s1, s2, s3, i1 + 1, i2, i3 + 1);
             }
             else if (c2 == c3 && c1 != c3)
             {
                 //Console.WriteLine("Taking 2");
                 // Second character match, only increment that one
-                res = dp(s1, s2, s3, i1, i2 + 1, i3 + 1);
+                return dp(s1, s2, s3, i1, i2 + 1, i3 + 1);
             }
             else if (c1 == c3 && c2 == c3)
             {
@@ -64,11 +61,10 @@ namespace LeetCodeExample.Test
                 //Console.WriteLine("Trying both");
                 bool try1 = dp(s1, s2, s3, i1 + 1, i2, i3 + 1);
                 bool try2 = dp(s1, s2, s3, i1, i2 + 1, i3 + 1);
-                res = try1 || try2;
+                return try1 || try2;
             }
-            map.Add((i1, i2, i3), res);
             //Console.WriteLine("Return false");
-            return res;
+            return false;
         }
     }
 }
