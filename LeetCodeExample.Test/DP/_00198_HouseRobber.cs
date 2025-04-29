@@ -13,11 +13,19 @@ namespace LeetCodeExample.Test
     {
         public int Rob(int[] nums)
         {
-            // We can start at house 1 or house 2, return the max profit if we start at either of those
-            return Math.Max(dp(nums, 0), dp(nums, 1));
+            // One extra space used to remove edge cases and if statements
+            int[] dp = new int[nums.Length + 1];
+            dp[0] = 0;
+            dp[1] = nums[0];
+            for (int i = 2; i < nums.Length + 1; i++)
+            {
+                dp[i] = Math.Max(dp[i - 1], dp[i - 2] + nums[i - 1]);
+            }
+
+            return dp[nums.Length];
         }
 
-        Dictionary<int, int> map = new Dictionary<int, int>();
+        /*Dictionary<int, int> map = new Dictionary<int, int>();
 
         public int dp(int[] nums, int i)
         {
@@ -43,6 +51,6 @@ namespace LeetCodeExample.Test
             map.Add(i, thisProfit);
             //Console.WriteLine($"{i} {thisProfit}");
             return thisProfit;
-        }
+        }*/
     }
 }
