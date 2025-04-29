@@ -27,7 +27,7 @@ namespace LeetCodeExample.Test
                 else
                 {
                     int j = binarySearch(sub, num);
-                    sub.[j] = num;
+                    sub[j] = num;
                 }
             }
 
