@@ -10,6 +10,8 @@ class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         if not head:
             return None
+        if not head.next:
+            return head
         # We need to find the length of the linked list first so we can mod k
         # We don't know what we are looking for yet until k gets modularized
         length = 0
