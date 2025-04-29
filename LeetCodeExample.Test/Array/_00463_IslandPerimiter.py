@@ -5,7 +5,7 @@
 # The island doesn't have "lakes", meaning the water inside isn't connected to the water around the island. One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. Determine the perimeter of the island.
 
 
-
+from typing import List
 class Solution:
     def islandPerimeter(self, grid: List[List[int]]) -> int:
         count = 0
