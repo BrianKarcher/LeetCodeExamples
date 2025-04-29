@@ -49,7 +49,7 @@ namespace LeetCodeExample.Test
                 int size = queue.Count();
                 for (int i = 0; i < size; ++i)
                 {
-                    Node cur = queue.Peek();
+                    Node cur = queue.Dequeue();
                     //Node cur = the first node in queue;
                     //return step if cur is target;
                     if (cur == target)
