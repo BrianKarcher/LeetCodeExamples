@@ -26,9 +26,30 @@ namespace LeetCodeExample.Test
             Assert.AreEqual(6, answer); // Cheapest is: start on cost[0], and only step on 1s, skipping cost[3].
         }
 
-        Dictionary<int, int> map;
 
         public int MinCostClimbingStairs(int[] cost)
+        {
+            if (cost.Length < 3)
+            {
+                return Math.Min(cost[0], cost[1]);
+            }
+            int[] dp = new int[cost.Length];
+            dp[0] = cost[0];
+            dp[1] = cost[1];
+            for (int i = 2; i < cost.Length; i++)
+            {
+                dp[i] = Math.Min(dp[i - 1], dp[i - 2]) + cost[i];
+            }
+            return Math.Min(dp[cost.Length - 1], dp[cost.Length - 2]);
+        }
+
+        /// <summary>
+        /// //////////////////////////////////////////
+        /// </summary>
+
+        Dictionary<int, int> map;
+
+        public int MinCostClimbingStairs3(int[] cost)
         {
             map = new Dictionary<int, int>();
             int oneStep = Recurse(cost, 0);
