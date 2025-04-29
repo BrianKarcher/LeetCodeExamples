@@ -1,0 +1,46 @@
+class Solution:
+    def simplifyPath(self, path: str) -> str:
+        stack = []
+        split = path.split("/")
+        for x in split:
+            if x == "." or not x:
+                continue
+            elif x == "..":
+                if stack:
+                    stack.pop()
+                    #print("popping " + popped)
+                continue
+            #print("appending " + x)
+            stack.append(x)
+        return "/" + "/".join(stack)
+
+# class Solution:
+#     def simplifyPath(self, path: str) -> str:
+#         stack = [];
+#         #split = path.split("/")
+#         currentFolder = []
+#         for char in path:
+#             if char != "/":
+#                 currentFolder.append(char)
+#                 continue
+#             else:
+#                 self.calc(currentFolder, stack)
+#                 currentFolder = []
+#         if currentFolder:
+#             self.calc(currentFolder, stack)
+#         return "/" + "/".join(stack)
+
+#     def calc(self, currentFolder, stack):
+#         currentFolderStr = "".join(currentFolder)
+#         #currentFolder = []
+#         if currentFolderStr == "":
+#             return
+#         elif currentFolderStr == ".":
+#             return
+#         elif currentFolderStr == "..":
+#             if stack:
+#                 popped = stack.pop()
+#                 #print("popping " + popped)
+#             return
+#         #print("appending " + currentFolderStr)
+#         stack.append(currentFolderStr)
