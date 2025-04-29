@@ -14,11 +14,11 @@ namespace LeetCodeExample.Test
     {
         // For a particular x value, store all the distinct y's
         Dictionary<int, HashSet<int>> xs = new Dictionary<int, HashSet<int>>();
-        Dictionary<(int x, int y), int> points = new Dictionary<(int x, int y), int>();
+        int[,] points;
 
         public _02013_DetectSquares()
         {
-
+            points = new int[1001,1001];
         }
 
         public void Add(int[] point)
@@ -29,9 +29,7 @@ namespace LeetCodeExample.Test
             }
             xs[point[0]].Add(point[1]);
 
-            if (!points.ContainsKey((point[0], point[1])))
-                points.Add((point[0], point[1]), 0);
-            points[(point[0], point[1])]++;
+            points[point[0], point[1]]++;
         }
 
         public int Count(int[] point)
@@ -52,21 +50,12 @@ namespace LeetCodeExample.Test
                 int y2 = point[1];
                 // There are two ways to form a square, left or right. Check left first.
                 int x1 = point[0] - Math.Abs(y2 - y1);
-                rtn += GetPointCount(x1, y1) * GetPointCount(x2, y1) * GetPointCount(x1, y2);
+                rtn += points[x1, y1] * points[x2, y1] * points[x1, y2];
                 // Now check right
                 x1 = point[0] + Math.Abs(y2 - y1);
-                rtn += GetPointCount(x1, y1) * GetPointCount(x2, y1) * GetPointCount(x1, y2);
+                rtn += points[x1, y1] * points[x2, y1] * points[x1, y2];
             }
             return rtn;
-        }
-
-        public int GetPointCount(int x, int y)
-        {
-            if (!points.TryGetValue((x, y), out int count))
-            {
-                return 0;
-            }
-            return count;
         }
     }
 }
