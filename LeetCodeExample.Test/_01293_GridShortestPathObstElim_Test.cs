@@ -184,9 +184,6 @@ namespace LeetCodeExample.Test
             if (row < 0 || col < 0 || row > grid.Length - 1 || col > grid[0].Length - 1)
                 return;
 
-            //if (visited[row][col])
-            //    return;
-
             if (grid[row][col] == 1)
             {
                 k--;
@@ -200,7 +197,6 @@ namespace LeetCodeExample.Test
 
             visited[row][col] = Math.Max(visited[row][col], k);
 
-            //visited.Add((row, col));
             q.Enqueue((row, col, k));
         }
     }
