@@ -11,7 +11,35 @@ namespace LeetCodeExample.Test
     /// </summary>
     public class _00516_LongestPalindromicSubsequence
     {
-        public int LongestPalindromeSubseq(string s)
+        public int longestPalindromeSubseq(String s)
+        {
+            if (s == null || s.Length == 0)
+            {
+                return 0;
+            }
+            int[,] dp = new int[s.Length,s.Length];
+            for (int i = 0; i < s.Length; i++)
+            {
+                dp[i,i] = 1;
+            }
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                for (int j = i + 1; j < s.Length; j++)
+                {
+                    if (s[i] == s[j])
+                    {
+                        dp[i,j] = 2 + dp[i + 1,j - 1];
+                    }
+                    else
+                    {
+                        dp[i,j] = Math.Max(dp[i,j - 1], dp[i + 1,j]);
+                    }
+                }
+            }
+            return dp[0,s.Length - 1];
+        }
+
+        public int LongestPalindromeSubseq2(string s)
         {
             int max = 1;
             for (int i = 0; i < s.Length; i++)
