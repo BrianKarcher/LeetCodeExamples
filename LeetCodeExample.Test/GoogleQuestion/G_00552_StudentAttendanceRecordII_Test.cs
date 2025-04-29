@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace LeetCodeExample.Test
+namespace LeetCodeExample.Test.Google
 {
     /// <summary>
     //    An attendance record for a student can be represented as a string where each character signifies whether the student was absent, late, or present on that day.The record only contains the following three characters:
@@ -17,7 +17,7 @@ namespace LeetCodeExample.Test
     //    The student was never late ('L') for 3 or more consecutive days.
     //    Given an integer n, return the number of possible attendance records of length n that make a student eligible for an attendance award.The answer may be very large, so return it modulo 109 + 7.
     /// </summary>
-    public class G_00552_StudentAttendanceRecordII_Test
+    public class _00552_StudentAttendanceRecordII_Test
     {
         [SetUp]
         public void Setup()
@@ -73,11 +73,45 @@ namespace LeetCodeExample.Test
             //int total = dp(n, 0, 0);
             return (int)total;
         }
-
-        //int total;
         int M = 1000000007;
 
+
+        //-----------------------------------------------------------
         public int CheckRecord2(int n)
+        {
+            return dp(0, 0, 0, n);
+        }
+
+        int mod = 1000000007;
+        Dictionary<(int absent, int late, int i), int> memo = new Dictionary<(int absent, int late, int i), int>();
+
+        int dp(int absentCount, int lateCount, int i, int n)
+        {
+            if (i == n)
+                return 1;
+
+            if (memo.ContainsKey((absentCount, lateCount, i)))
+                return memo[(absentCount, lateCount, i)];
+
+            // possible today
+            int count = 0;
+            // can be Present
+            count = (count + dp(absentCount, 0, i + 1, n)) % mod;
+            // Can we be late?
+            if (lateCount < 2)
+                count = (count + dp(absentCount, lateCount + 1, i + 1, n)) % mod;
+            // Can we be absent?
+            if (absentCount == 0)
+                count = (count + dp(1, 0, i + 1, n)) % mod;
+
+            memo.Add((absentCount, lateCount, i), count);
+            return count;
+        }
+
+        //int total;
+
+
+        /*public int CheckRecord(int n)
         {
             //total = 0;
 
@@ -86,7 +120,7 @@ namespace LeetCodeExample.Test
         }
 
         //int total;
-        //int M = 1000000007;
+        int M = 1000000007;
 
         Dictionary<(int n, int absentCount, int late), int> cache = new Dictionary<(int n, int absentCount, int late), int>();
 
@@ -120,6 +154,6 @@ namespace LeetCodeExample.Test
             cache.Add((n, absentCount, lateRecurringCount), total);
 
             return total;
-        }
+        }*/
     }
 }

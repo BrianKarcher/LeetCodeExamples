@@ -73,9 +73,43 @@ namespace LeetCodeExample.Test
             //int total = dp(n, 0, 0);
             return (int)total;
         }
+        int M = 1000000007;
+
+
+        //-----------------------------------------------------------
+        public int CheckRecord2(int n)
+        {
+            return dp(0, 0, 0, n);
+        }
+
+        int mod = 1000000007;
+        Dictionary<(int absent, int late, int i), int> memo = new Dictionary<(int absent, int late, int i), int>();
+
+        int dp(int absentCount, int lateCount, int i, int n)
+        {
+            if (i == n)
+                return 1;
+
+            if (memo.ContainsKey((absentCount, lateCount, i)))
+                return memo[(absentCount, lateCount, i)];
+
+            // possible today
+            int count = 0;
+            // can be Present
+            count = (count + dp(absentCount, 0, i + 1, n)) % mod;
+            // Can we be late?
+            if (lateCount < 2)
+                count = (count + dp(absentCount, lateCount + 1, i + 1, n)) % mod;
+            // Can we be absent?
+            if (absentCount == 0)
+                count = (count + dp(1, 0, i + 1, n)) % mod;
+
+            memo.Add((absentCount, lateCount, i), count);
+            return count;
+        }
 
         //int total;
-        int M = 1000000007;
+        
 
         /*public int CheckRecord(int n)
         {
