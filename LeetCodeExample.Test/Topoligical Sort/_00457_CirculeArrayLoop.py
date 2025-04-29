@@ -53,20 +53,10 @@ class Solution:
 
         colors = [WHITE] * len(nums)
         self.isCycle = False
-        # self.isPositive = True
 
         for i in range(len(nums)):
             self.isPositive = nums[i] > 0
             dfs(i, 1)
-        
-        # colors = [WHITE] * len(nums)
-        # self.isPossible = True
-        # self.isPositive = False
-
-        # for i in range(len(nums)):
-        #     dfs(i)
-        #     if not self.isPossible:
-        #         return False
 
         return self.isCycle
     
