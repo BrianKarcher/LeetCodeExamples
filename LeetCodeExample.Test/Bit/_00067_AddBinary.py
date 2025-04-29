@@ -15,7 +15,7 @@ class Solution:
             if i < len(b) and b[i * -1 - 1] == "1":
                 count += 1
             
-            print(f"{i}, {count}")
+            #print(f"{i}, {count}")
             if count == 0:
                 rtn = "0" + rtn
             elif count == 1:
