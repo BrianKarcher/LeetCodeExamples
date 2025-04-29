@@ -19,6 +19,7 @@ class Solution:
         fast = dummy
         slow: ListNode = dummy
         # Slow is the middle node since it goes half speed
+        # fast always needs to be on a real value
         while fast and fast.next and fast.next.next:
             fast = fast.next.next
             slow = slow.next
