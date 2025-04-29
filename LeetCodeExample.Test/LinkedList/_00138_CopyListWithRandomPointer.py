@@ -21,6 +21,28 @@ class Node:
         self.random = random
 """
 
+from typing import Optional
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return None
+        map = {}
+
+        def duplicate(node: Optional[Node]) -> Optional[Node]:
+            if not node:
+                return None
+            if node in map:
+                return map[node]
+            newNode = Node(node.val)
+            map[node] = newNode
+            newNode.next = duplicate(node.next)
+            newNode.random = duplicate(node.random)
+            return newNode
+
+        return duplicate(head)
+    
+##########################################
+
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         if head is None:
