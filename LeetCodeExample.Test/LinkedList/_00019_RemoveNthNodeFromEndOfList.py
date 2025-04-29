@@ -12,11 +12,10 @@ class Solution:
         dummyHead.next = head
         current = head
         prev = dummyHead
-        prevI = 0
         while current:
             size += 1
             current = current.next
-            if size - prevI > n:
+            if size > n:
                 prev = prev.next
         # print(f'{prev.val}')
         prev.next = prev.next.next
