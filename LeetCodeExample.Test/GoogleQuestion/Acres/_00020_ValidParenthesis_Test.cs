@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LeetCodeExample.Test
+namespace LeetCodeExample.Test.Google
 {
     /// <summary>
         //    Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.

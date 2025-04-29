@@ -41,6 +41,41 @@ namespace LeetCodeExample.Test.Google
 
         public void FindSecretWord(string[] wordlist, Master master)
         {
+            Random rdn = new Random();
+            List<string> wordsRemaining = wordlist.ToList();
+            for (int i = 0; i < 10; i++)
+            {
+                int guess = rdn.Next(wordsRemaining.Count);
+                int guessCount = master.Guess(wordsRemaining[guess]);
+                // Found the answer?
+                if (guessCount == 6)
+                    return;
+                List<string> newWordList = new List<string>();
+                for (int j = 0; j < wordsRemaining.Count; j++)
+                {
+                    if (j == guess)
+                        continue;
+                    int matchCount = WordMatch(wordsRemaining[j], wordsRemaining[guess]);
+                    if (matchCount == guessCount)
+                        newWordList.Add(wordsRemaining[j]);
+                }
+                wordsRemaining = newWordList;
+            }
+        }
+
+        int WordMatch(string w1, string w2)
+        {
+            int count = 0;
+            for (int i = 0; i < w1.Length; i++)
+            {
+                if (w1[i] == w2[i])
+                    count++;
+            }
+            return count;
+        }
+
+        public void FindSecretWord2(string[] wordlist, Master master)
+        {
             Random rnd = new Random();
             // We can remove from lists
             List<string> lstWords = new List<string>(wordlist);
