@@ -18,6 +18,7 @@ class Solution:
             if not node:
                 return
             rec(node.left)
+            # in-order traversal of a BST is in sorted order.
             if self.prevNode:
                 self.ans = min(self.ans, node.val - self.prevNode.val)
             self.prevNode = node
