@@ -3,7 +3,6 @@ class TrieNode:
     def __init__(self, char: str):
         self.chars = {}
         self.char = char
-        self.count = 1 # How many words are on this node. For pruning
         self.isWord = False
 
 class Solution:
@@ -66,7 +65,6 @@ class Solution:
                 child = TrieNode(char)
             else:
                 child = node.chars[char]
-            child.count += 1
             node.chars[char] = child
             node = child
         #print(f'setting word {word}, node = {node.char}')
