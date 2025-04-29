@@ -11,7 +11,7 @@ namespace LeetCodeExample.Test
 
    //For example, "ace" is a subsequence of "abcde".
     /// </summary>
-    public class _00792_NumberOfMatchingSubstrings_Test
+    public class _00792_NumberOfMatchingSubsequences_Test
     {
         [SetUp]
         public void Setup()
