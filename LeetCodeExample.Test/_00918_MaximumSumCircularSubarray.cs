@@ -53,5 +53,39 @@ namespace LeetCodeExample.Test
             globalMax = Math.Max(max, minSum);
             return globalMax;
         }
+
+        // This nearly works, some error somewhere.
+        public int MaxSubarraySumCircular2(int[] nums)
+        {
+            List<int> lNums = new();
+            lNums.AddRange(nums);
+            lNums.AddRange(nums);
+
+            int max = Int32.MinValue;
+            int count = 0;
+            Queue<int> queue = new();
+
+            for (int r = 0; r < lNums.Count; r++)
+            {
+                if (count < 0)
+                {
+                    queue.Clear();
+                    count = 0;
+                }
+                // Keep window size less than size of nums, and dequeue any negative
+                // numbers to the furthest left
+                while (queue.Count != 0 && (queue.Count >= nums.Length || queue.Peek() < 0))
+                {
+                    int num = queue.Dequeue();
+                    count -= num;
+                    max = Math.Max(max, count);
+                }
+                count += lNums[r];
+                queue.Enqueue(lNums[r]);
+                Console.WriteLine($"l: {queue.Peek()}, r: {r}, count: {count}");
+                max = Math.Max(max, count);
+            }
+            return max;
+        }
     }
 }
