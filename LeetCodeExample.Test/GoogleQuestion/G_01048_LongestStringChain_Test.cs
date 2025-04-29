@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LeetCodeExample.Test.Google
 {
@@ -33,6 +34,55 @@ namespace LeetCodeExample.Test.Google
         }
 
         public int LongestStrChain(string[] words)
+        {
+            // a word chain can only be separated by one character
+            // so be a little greedy by ordering by length.
+            words = words.OrderBy(i => i.Length).ToArray();
+            int[] dp = new int[words.Length];
+            Array.Fill(dp, 1);
+            int max = 1;
+            for (int i = 1; i < words.Length; i++)
+            {
+                int k = i - 1;
+                while (k >= 0 && words[i].Length - words[k].Length < 2)
+                {
+                    if (IsChain(words[k], words[i]))
+                    {
+                        dp[i] = Math.Max(dp[i], dp[k] + 1);
+                        max = Math.Max(max, dp[i]);
+                    }
+                    k--;
+                }
+            }
+            return max;
+        }
+
+        public bool IsChain(string smaller, string bigger)
+        {
+            if (smaller.Length != bigger.Length - 1)
+                return false;
+            int s = 0;
+            for (int k = 0; k < bigger.Length; k++)
+            {
+                if (s >= smaller.Length)
+                {
+                    break;
+                }
+                if (smaller[s] == bigger[k])
+                {
+                    s++;
+                }
+            }
+            return s == smaller.Length;
+        }
+
+        /// <summary>
+        /// /////////////////
+        /// </summary>
+        /// <param name="words"></param>
+        /// <returns></returns>
+
+        public int LongestStrChain2(string[] words)
         {
             //map = new Dictionary<int, int>();
 
