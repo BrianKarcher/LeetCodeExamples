@@ -21,3 +21,17 @@ class Solution:
             hash.add(node)
             node = node.next
         return False
+    
+# Solution that has no extra memory - O(1):
+
+from typing import Optional
+import sys
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        node = head
+        while node != None:
+            if node.val == sys.maxsize:
+                return True
+            node.val = sys.maxsize
+            node = node.next
+        return False
