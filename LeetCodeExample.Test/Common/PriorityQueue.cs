@@ -12,7 +12,7 @@ namespace LeetCodeExample.Test.Common
         public PriorityQueue()
         {
             _customCompare = Comparer<T>.Default;
-            //this.data = new List<T>();
+            this.data = new List<T>();
         }
 
         public PriorityQueue(IComparer<T> customCompare)
