@@ -1,4 +1,66 @@
 from typing import List
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        rows = len(board)
+        cols = len(board[0])
+        trie = {}
+        # Construct Trie
+        for word in words:
+            if len(word) > rows * cols:
+                continue
+            node = trie
+            for c in word:
+                if not c in node:
+                    node[c] = {}
+                node = node[c]
+            node.setdefault('$')
+        # print(trie)
+        # Prevent duplicates
+        ans = set()
+        dirs = [(1, 0), (-1, 0), (0, -1), (0, 1)]
+        def rec(r: int, c: int, word: str, node: dict, visited: set):
+            # Base case
+            # Don't continue this path if the trie is done
+            # This is ultimately what will stop recursion
+            letter = board[r][c]
+            if letter not in node:
+                return
+            child = node[letter]
+            word += letter
+            # print(f'{r} {c} {word} {node}')
+            if '$' in child:
+                ans.add(word)
+                child.pop('$')
+            
+            visited.add((r, c))
+            for dir in dirs:
+                newR = dir[0] + r
+                newC = dir[1] + c
+                # Bounds check
+                if not (0 <= newR < rows and 0 <= newC < cols):
+                    continue
+                if (newR, newC) in visited:
+                    continue
+                rec(newR, newC, word, child, visited)
+            # Backtrack because we have exhausted this path
+            visited.remove((r, c))
+            # Optimization: Prune leaf nodes if no more words this way
+            if not child:
+                node.pop(letter)
+        
+        # Check every starting position
+        for row in range(rows):
+            for col in range(cols):
+                rec(row, col, '', trie, set())
+        
+        return list(ans)
+
+
+
+
+###############
+
+from typing import List
 class TrieNode:
     def __init__(self, char: str):
         self.chars = {}
