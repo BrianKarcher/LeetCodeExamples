@@ -24,7 +24,7 @@ namespace LeetCodeExample.Test
 
         //}
 
-        static void Main(String[] args)
+        static void Main3(String[] args)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
