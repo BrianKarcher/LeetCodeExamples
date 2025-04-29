@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -22,6 +22,7 @@ namespace LeetCodeExample.Test.Union
 
         }
 
+        // O(Nα(N))≈O(N), where NN is the number of vertices (and also the number of edges) in the graph, and α is the Inverse-Ackermann function
         public int[] FindRedundantConnection(int[][] edges)
         {
             DSU dsu = new DSU(10000);
