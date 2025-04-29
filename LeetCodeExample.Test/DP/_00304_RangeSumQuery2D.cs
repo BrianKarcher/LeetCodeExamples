@@ -31,16 +31,13 @@ namespace LeetCodeExample.Test
         {
             int rows = matrix.Length;
             int cols = matrix[0].Length;
-            sums = new int[rows, cols];
+            sums = new int[rows + 1, cols + 1];
 
-            for (int r = 0; r < rows; r++)
+            for (int r = 1; r <= rows; r++)
             {
-                for (int c = 0; c < cols; c++)
+                for (int c = 1; c <= cols; c++)
                 {
-                    int sumu = r == 0 ? 0 : sums[r - 1, c];
-                    int suml = c == 0 ? 0 : sums[r, c - 1];
-                    int sumul = r == 0 || c == 0 ? 0 : sums[r - 1, c - 1];
-                    sums[r, c] = sumu + suml + matrix[r][c] - sumul;
+                    sums[r, c] = sums[r - 1, c] + sums[r, c - 1] + matrix[r - 1][c - 1] - sums[r - 1, c - 1];
                 }
             }
         }
@@ -48,22 +45,9 @@ namespace LeetCodeExample.Test
         public int SumRegion(int row1, int col1, int row2, int col2)
         {
             // We find the sum of the box from (0,0) to the bottom-right of the block.
-            int sum = sums[row2, col2];
             // Need to subtract the left and up side areas
-            if (col1 > 0)
-            {
-                sum -= sums[row2, col1 - 1];
-            }
-            if (row1 > 0)
-            {
-                sum -= sums[row1 - 1, col2];
-            }
             // Add in one top-left box since it got subtracted twice
-            if (col1 > 0 && row1 > 0)
-            {
-                sum += sums[row1 - 1, col1 - 1];
-            }
-            return sum;
+            return sums[row2 + 1, col2 + 1] - sums[row2 + 1, col1] - sums[row1, col2 + 1] + sums[row1, col1];
         }
     }
 }

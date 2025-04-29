@@ -27,15 +27,12 @@ namespace LeetCodeExample.Test
         {
             int rows = mat.Length;
             int cols = mat[0].Length;
-            int[,] sums = new int[rows, cols];
-            for (int r = 0; r < rows; r++)
+            int[,] sums = new int[rows + 1, cols + 1];
+            for (int r = 1; r <= rows; r++)
             {
-                for (int c = 0; c < cols; c++)
+                for (int c = 1; c <= cols; c++)
                 {
-                    int sumu = r == 0 ? 0 : sums[r - 1, c];
-                    int suml = c == 0 ? 0 : sums[r, c - 1];
-                    int sumul = r == 0 || c == 0 ? 0 : sums[r - 1, c - 1];
-                    sums[r, c] = sumu + suml + mat[r][c] - sumul;
+                    sums[r, c] = sums[r - 1, c] + sums[r, c - 1] + mat[r - 1][c - 1] - sums[r - 1, c - 1];
                 }
             }
             int[][] ans = new int[rows][];
@@ -46,26 +43,14 @@ namespace LeetCodeExample.Test
                 for (int c = 0; c < cols; c++)
                 {
                     // Box boundaries
-                    int right = Math.Min(cols - 1, c + k);
-                    int down = Math.Min(rows - 1, r + k);
-                    int leftMinusOne = c - k - 1;
-                    int upMinusOne = r - k - 1;
-                    int sum = sums[down, right];
+                    int c1 = Math.Max(0, c - k);
+                    int r1 = Math.Max(0, r - k);
+                    int c2 = Math.Min(cols - 1, c + k);
+                    int r2 = Math.Min(rows - 1, r + k);
+                    r1++; r2++; c1++; c2++; // Since `sum` start with 1 so we need to increase r1, c1, r2, c2 by 1
                     // Need to subtract the left and up side areas
-                    if (leftMinusOne >= 0)
-                    {
-                        sum -= sums[down, leftMinusOne];
-                    }
-                    if (upMinusOne >= 0)
-                    {
-                        sum -= sums[upMinusOne, right];
-                    }
                     // Add in one top-left box since it got subtracted twice
-                    if (leftMinusOne >= 0 && upMinusOne >= 0)
-                    {
-                        sum += sums[upMinusOne, leftMinusOne];
-                    }
-                    ans[r][c] = sum;
+                    ans[r][c] = sums[r2, c2] - sums[r2, c1 - 1] - sums[r1 - 1, c2] + sums[r1 - 1, c1 - 1];
                 }
             }
             return ans;
