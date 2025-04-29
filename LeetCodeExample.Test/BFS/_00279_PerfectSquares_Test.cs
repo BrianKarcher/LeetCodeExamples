@@ -29,6 +29,46 @@ namespace LeetCodeExample.Test
             Assert.AreEqual(1, answer);
         }
 
+        int?[] memo = new int?[10_000];
+
+        public int NumSquares(int n)
+        {
+            List<int> sq = new List<int>();
+            // Find perfect square candidates
+            for (int i = 1; i * i <= n; i++)
+            {
+                sq.Add(i * i);
+                //Console.WriteLine($"Adding sq {i * i}");
+            }
+            return dp(n, sq);
+        }
+
+        public int dp(int remain, IEnumerable<int> candidates)
+        {
+            if (remain == 0)
+            {
+                return 0;
+            }
+            if (remain < 0)
+            {
+                return Int32.MaxValue;
+            }
+            if (memo[remain] != null)
+            {
+                return memo[remain].Value;
+            }
+            int count = Int32.MaxValue;
+            foreach (int candidate in candidates)
+            {
+                count = Math.Min(count, dp(remain - candidate, candidates));
+            }
+            // prevent int overflow
+            count = Math.Max(count, count + 1);
+            memo[remain] = count;
+            //Console.WriteLine($"{remain}, {count}");
+            return count;
+        }
+
         //public int NumSquares(int n)
         //{
         //    List<int> perfectSquares = new List<int>();
@@ -75,7 +115,7 @@ namespace LeetCodeExample.Test
         // Space Complexity: O(sqrt(n) ^ h)
         // We keep a list of square_nums, which is of \sqrt{n} ​
         //  size.In addition, we would need additional space for the recursive call stack.But as we will learn later, the size of the call track would not exceed 4.
-        public int NumSquares(int n)
+        public int NumSquares2(int n)
         {
             List<int> perfectSquares = new List<int>();
 
