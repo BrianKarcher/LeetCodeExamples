@@ -29,6 +29,8 @@ class Solution:
         start = dummyHead
         count = 0
         while current:
+            count += 1
+            current = current.next
             if count == k:
                 count = 0
                 # Current is the one after the reverse, so we don't need to worry about 
@@ -36,9 +38,4 @@ class Solution:
                 temp = start.next
                 start.next = reverse(start.next, current)
                 start = temp
-            count += 1
-            
-            current = current.next
-        if count == k:
-            start.next = reverse(start.next, current)
         return dummyHead.next
