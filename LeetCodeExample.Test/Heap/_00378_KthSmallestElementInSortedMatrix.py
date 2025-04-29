@@ -7,6 +7,40 @@
 from typing import List
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        def countLessOrEqual(x) -> int:
+            count = 0
+            for row in range(len(matrix)):
+                c = len(matrix) - 1
+                # Can speed up by doing a binary search here
+                # Might feel funny doing a binary search within a binary search
+                while c >= 0 and matrix[row][c] > x:
+                    c -= 1
+                count += c + 1
+            return count
+
+        def bs() -> int:
+            n = len(matrix)
+            if n == 1 or k == 1:
+                return matrix[0][0]
+            # r starts as the largest value in the matrix, as defined by the problem
+            l, r = matrix[0][0], matrix[n - 1][n - 1]
+            # We do a binary search on VALUE, not indexes
+            ans = -1
+            while l <= r:
+                mid = int(l + (r - l) / 2)
+                #print(f'{l}, {r}, {mid}, count = {count}, dups = {dups}')
+                if countLessOrEqual(mid) >= k:
+                    ans = mid
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            return ans
+        return bs()
+    
+    
+from typing import List
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
         def bs() -> int:
             n = len(matrix)
             if n == 1 or k == 1:
