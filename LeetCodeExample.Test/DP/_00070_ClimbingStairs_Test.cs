@@ -58,5 +58,38 @@ namespace LeetCodeExample.Test
             map.Add(n, val);
             return val;
         }
+
+
+        /////////////
+        /// <summary>
+        /// 
+        /// </summary>
+        int?[] memo;
+
+        public int ClimbStairs2(int n)
+        {
+            memo = new int?[n];
+            return dp(0, n);
+        }
+
+        public int dp(int current, int n)
+        {
+            if (current == n)
+                return 1;
+            if (current > n)
+                return 0;
+
+            if (memo[current] != null)
+            {
+                return memo[current].Value;
+            }
+
+            int oneStep = dp(current + 1, n);
+            int twoStep = dp(current + 2, n);
+
+            int combo = oneStep + twoStep;
+            memo[current] = combo;
+            return combo;
+        }
     }
 }

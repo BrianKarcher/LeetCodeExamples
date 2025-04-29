@@ -92,5 +92,34 @@ namespace LeetCodeExample.Test
             }
             return res;
         }
+
+        public int countCollisions2(String directions)
+        {
+            int collisions = 0;
+            Stack<char> stack = new();
+            stack.Push(directions[0]);
+            for (int i = 1; i < directions.Length; i++)
+            {
+                char curr = directions[i];
+                if (stack.Peek() == 'R' && curr == 'L')
+                {
+                    collisions += 2;
+                    stack.Pop();
+                    curr = 'S';
+                }
+                else if (stack.Peek() == 'S' && curr == 'L')
+                {
+                    curr = 'S';
+                    collisions += 1;
+                }
+                while (stack.Count != 0 && stack.Peek() == 'R' && curr == 'S')
+                {
+                    collisions += 1;
+                    stack.Pop();
+                }
+                stack.Push(curr);
+            }
+            return collisions;
+        }
     }
 }

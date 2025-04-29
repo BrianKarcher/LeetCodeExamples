@@ -80,5 +80,34 @@ namespace LeetCodeExample.Test
         //    // The final element in minimumCost refers to the top floor
         //    return minimumCost[minimumCost.length - 1];
         //}
+
+        /////////////////////
+        ///
+
+        int?[] memo;
+
+        public int MinCostClimbingStairs2(int[] cost)
+        {
+            memo = new int?[cost.Length];
+            return Math.Min(dp(0, cost), dp(1, cost));
+        }
+
+        public int dp(int index, int[] cost)
+        {
+            if (index >= cost.Length)
+            {
+                return 0;
+            }
+
+            if (memo[index] != null)
+            {
+                return memo[index].Value;
+            }
+
+            int val = cost[index] + Math.Min(dp(index + 1, cost), dp(index + 2, cost));
+            memo[index] = val;
+
+            return val;
+        }
     }
 }
