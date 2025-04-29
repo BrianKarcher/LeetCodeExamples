@@ -10,7 +10,7 @@ namespace LeetCodeExample.Test
     //You may assume that each input would have exactly one solution, and you may not use the same element twice.
     //You can return the answer in any order.
     /// </summary>
-    public class _001610_MaxVisiblePoints_Test
+    public class _01610_MaxVisiblePoints_Test
     {
         [SetUp]
         public void Setup()
