@@ -4,13 +4,13 @@
 class Solution:
     def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
         pushStack = []
-        popQueue = deque(popped)
+        n = 0
         #print(popStack)
         for x in pushed:
             pushStack.append(x)
             #print("pushing " + str(pushStack[-1]) + " checking against " + str(popStack[-1]))
-            while pushStack and popQueue and pushStack[-1] == popQueue[0]:
+            while pushStack and pushStack[-1] == popped[n]:
                 #print("popping " + str(pushStack[-1]))
                 pushStack.pop()
-                popQueue.popleft()
+                n = n + 1
         return not pushStack
