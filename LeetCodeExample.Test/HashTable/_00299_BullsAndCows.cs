@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LeetCodeExample.Test.Google
+namespace LeetCodeExample.Test
 {
     /// <summary>
     //Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
