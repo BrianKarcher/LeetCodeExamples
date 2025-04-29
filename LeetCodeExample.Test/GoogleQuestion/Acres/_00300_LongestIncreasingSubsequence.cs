@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LeetCodeExample.Test
+namespace LeetCodeExample.Test.Google
 {
     /// <summary>
     //Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
@@ -12,6 +12,8 @@ namespace LeetCodeExample.Test
     /// </summary>
     public class _00300_LongestIncreasingSubsequence
     {
+        // https://www.youtube.com/watch?v=cjWnW0hdF1Y
+        // Says if the interviewer wants nlogn without a hint, walk out of the room
         public int LengthOfLIS(int[] nums)
         {
             int[] dp = new int[nums.Length];
