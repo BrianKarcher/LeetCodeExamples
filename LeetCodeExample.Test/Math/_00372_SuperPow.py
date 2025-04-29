@@ -17,6 +17,7 @@
 
 # This solution involves a little math, refer to https://leetcode.com/problems/super-pow/solutions/84472/c-clean-and-short-solution/
 # The crux is a^1234567 % k = (a^1234560 % k) * (a^7 % k) % k = (a^123456 % k)^10 % k * (a^7 % k) % k
+# or, f(a,1234567) = f(a, 1234560) * f(a, 7) % k = f(f(a, 123456),10) * f(a,7)%k;
 # which you iterate once for each digit
 
 class Solution:
