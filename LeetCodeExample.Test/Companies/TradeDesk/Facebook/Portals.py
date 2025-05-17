@@ -1,6 +1,7 @@
 # This only passes 22/31 test cases.
 
 # This is a lot of lines of code. Maybe a DFS would be better for an interview?!?!?
+# This does grid mutation. Ask during interview if that is OK.
 
 from typing import List
 # Write any import statements here
